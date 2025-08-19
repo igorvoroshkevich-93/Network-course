@@ -162,7 +162,7 @@ Spine-1(config-if-Et3)#ip ospf neighbor bfd
 Spine-1(config)#router ospf 1
 Spine-1(config-router-ospf)#router-id 10.0.0.0
 ```
-![OSPF_hello.png](OSPF_hello.png)
+![Ospf_hello.png](Ospf_hello.png)
 
 все так же тихо, пока идкт только Hello от Spine-1, поднимаем конфигурацию на Leaf-1
 
@@ -192,15 +192,15 @@ Leaf-1(config-router-ospf)#exit
 Магия, видим в захвате обмен пакетами DBD LSR LSU LSAck, соседство установилось, смотрим состояние соседства на оборудовании и маршрутную таблицу
 Прикладываем скрин захвата трафика в момент установления соседства
 
-![OSPF_full.png](OSPF_full.png)
+![Ospf_full.png](Ospf_full.png)
 
 **Leaf-1**
 
-![OSPF_leaf-1.png](OSPF_leaf-1.png)
+![Ospf_leaf-1.png](Ospf_leaf-1.png)
 
 **Spine-1**
 
-![OSPF_spine-1.png](OSPF_spine-1.png)
+![Ospf_spine-1.png](Ospf_spine-1.png)
 
 Так, вроде все хорошо, проверим связность лупбеков 0 и 1
 все работает, аналогично поднимаем настройки для всех Leaf и Spine

@@ -142,7 +142,9 @@ Leaf-1(config-if-Lo1)#exit
 Включаем захват трафика на Spine-1 Interface Et1 и ставим фильтр на OSPF
 
 Включаем глобально OSPF на Spine-1
+
 *Ох, забыли BFD, аутентификацию, добавляем*
+
 ```
 Spine-1(config-if-Et1)#ip ospf authentication message-digest
 Spine-1(config-if-Et1)#ip ospf message-digest-key 10 md5 0 OtusOspf1
@@ -213,14 +215,19 @@ Leaf-1(config-router-ospf)#exit
 
 ## Аналогично поднимаем настройки для всех Leaf и Spine и проверим связность
 
-Конфигурация [общим файлом]()
+Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_OSPF/Ospf_full_conf.md)
+
 *забыл совсем перевести интерфейсы, не участвующие в ospf в режим passive, поправил в итоговом конфиге*
 
 Проверим связность, пинганем с Leaf-3 всех
 
-Все отлично, всех видим, все хорошо
+**Loopback's 0**
+![ospf_ping2.png](ospf_ping2.png)
+**Loopback's 1**
+![ospf_ping3.png](ospf_ping3.png)
 
+Все отлично, всех видим, все хорошо, ну и посмотрим на этом же лифе состояние OSPF
 
-ну и посмотрим на этом же лифе состояние OSPF
+![Ospf_leaf-3.png](Ospf_leaf-3.png)
 
 Выглядит все визуально хорошо.

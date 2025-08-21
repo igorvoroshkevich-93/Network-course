@@ -15,7 +15,7 @@
 
 ## Новая схема сети(Все та же)
 
-![OSPF_EVE.png](OSPF_EVE.png)
+![ISIS_EVE.png](ISIS_EVE.png)
 
 ### План распределения следующий
 

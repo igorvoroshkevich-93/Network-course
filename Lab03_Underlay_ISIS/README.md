@@ -395,7 +395,7 @@ Leaf-1(config-router-isis)#net 49.0001.0001.0001.2000.00
 
 ### Аналогично поднимаем настройки для всех Leaf и Spine и проверим связность
 
-Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_ISIS/ISIS_full_conf.md)
+Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab03_Underlay_ISIS/ISIS_full_conf.md)
 
 Проверим связность, пинганем с Spine-2 всех
 

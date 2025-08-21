@@ -345,7 +345,7 @@ Leaf-1(config-if-Lo0)#isis enable OtusLab
 
 Проверяем интерконекты по IPv4/IPv6
 
-![ISIS_ping2.png](ISIS_ping.png)
+![ISIS_ping1.png](ISIS_ping.png)
 
 Пинги есть, но ISIS пока не работает(мы специально не поднимали до конца)
 
@@ -409,6 +409,6 @@ Leaf-1(config-router-isis)#net 49.0001.0001.0001.2000.00
 
 Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
 
-![ISIS_leaf-3.png](ISIS_leaf-3.png)
+![ISIS_spine-2.png](ISIS_spine-2.png)
 
 Выглядит все визуально хорошо.

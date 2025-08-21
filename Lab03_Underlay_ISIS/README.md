@@ -400,9 +400,11 @@ Leaf-1(config-router-isis)#net 49.0001.0001.0001.2000.00
 Проверим связность, пинганем с Spine-2 всех
 
 **Loopback's 0**
+
 ![ISIS_ping3.png](ISIS_ping2.png)
 
 **Loopback's 1**
+
 ![ISIS_ping4.png](ISIS_ping3.png)
 
 Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS

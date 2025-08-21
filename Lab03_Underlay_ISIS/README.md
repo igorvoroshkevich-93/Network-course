@@ -214,10 +214,132 @@ Selector - оставляем неизменным - 00
 
 **Spine-1**
 ```
+localhost(config)#hostname Spine-1
+
+
+Spine-1(config)#ip routing
+
+Spine-1(config)#ipv6 unicast-routing
+
+Spine-1(config)#router isis OtusLab
+Spine-1(config-router-isis)#address-family ipv4 unicast
+Spine-1(config-router-isis-af)#exit
+Spine-1(config-router-isis)#address-family ipv6 unicast
+Spine-1(config-router-isis-af)#exit
+Spine-1(config-router-isis)#passive ethernet 4
+Spine-1(config-router-isis)#passive ethernet 5
+Spine-1(config-router-isis)#passive ethernet 6
+Spine-1(config-router-isis)#passive ethernet 7
+Spine-1(config-router-isis)#passive ethernet 8
+Spine-1(config-router-isis)#exit
+
+Spine-1(config)#int ethernet 1
+Spine-1(config-if-Et1)#no switchport
+Spine-1(config-if-Et1)#ip address 10.2.0.0/31
+Spine-1(config-if-Et1)#bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et1)#ipv6 address E342:4D31:8282:B010:2::0/127
+Spine-1(config-if-Et1)#isis enable OtusLab
+Spine-1(config-if-Et1)#isis bfd
+Spine-1(config-if-Et1)#isis network point-to-point
+Spine-1(config-if-Et1)#isis authentication mode md5
+Spine-1(config-if-Et1)#isis authentication key 0 OtusLab3
+Spine-1(config-if-Et1)#isis circuit-type level-1
+
+
+Spine-1(config)#int ethernet 2
+Spine-1(config-if-Et2)#no switchport
+Spine-1(config-if-Et2)#ip address 10.2.0.2/31
+Spine-1(config-if-Et2)#bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et2)#ipv6 address E342:4D31:8282:B010:2::2/127
+Spine-1(config-if-Et2)#isis enable OtusLab
+Spine-1(config-if-Et2)#isis bfd
+Spine-1(config-if-Et2)#isis network point-to-point
+Spine-1(config-if-Et2)#isis authentication mode md5
+Spine-1(config-if-Et2)#isis authentication key 0 OtusLab3
+Spine-1(config-if-Et2)#isis circuit-type level-1
+
+
+Spine-1(config)#int ethernet 3
+Spine-1(config-if-Et3)#no switchport
+Spine-1(config-if-Et3)#ip address 10.2.0.4/31
+Spine-1(config-if-Et3)#bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et3)#ipv6 address E342:4D31:8282:B010:2::4/127
+Spine-1(config-if-Et3)#isis enable OtusLab
+Spine-1(config-if-Et3)#isis bfd
+Spine-1(config-if-Et3)#isis network point-to-point
+Spine-1(config-if-Et3)#isis authentication mode md5
+Spine-1(config-if-Et3)#isis authentication key 0 OtusLab3
+Spine-1(config-if-Et3)#isis circuit-type level-1
+
+
+Spine-1(config)#int loopback 0
+Spine-1(config-if-Lo0)#ip address  10.0.0.0/32
+Spine-1(config-if-Lo0)#ipv6 address   E342:4D31:8282:B010:0::0/128
+Spine-1(config-if-Lo0)#isis enable OtusLab
+
+Spine-1(config)#int loopback 1
+Spine-1(config-if-Lo0)#ip address  10.1.0.0/32
+Spine-1(config-if-Lo0)#ipv6 address   E342:4D31:8282:B010:1::0/128
+Spine-1(config-if-Lo0)#isis enable OtusLab
 
 ```
+
 **Leaf-1**
 ```
+localhost(config)#hostname Leaf-1
+
+
+Leaf-1(config)#ip routing
+
+Leaf-1(config)#ipv6 unicast-routing
+
+Leaf-1(config)#router isis OtusLab
+Leaf-1(config-router-isis)#address-family ipv4 unicast
+Leaf-1(config-router-isis-af)#exit
+Leaf-1(config-router-isis)#address-family ipv6 unicast
+Leaf-1(config-router-isis-af)#exit
+Leaf-1(config-router-isis)#passive ethernet 4
+Leaf-1(config-router-isis)#passive ethernet 5
+Leaf-1(config-router-isis)#passive ethernet 6
+Leaf-1(config-router-isis)#passive ethernet 7
+Leaf-1(config-router-isis)#passive ethernet 8
+Leaf-1(config-router-isis)#exit
+
+Leaf-1(config)#int ethernet 1
+Leaf-1(config-if-Et1)#no switchport
+Leaf-1(config-if-Et1)#ip address 10.2.0.1/31
+Leaf-1(config-if-Et1)#bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et1)#ipv6 address E342:4D31:8282:B010:2::1/127
+Leaf-1(config-if-Et1)#isis enable OtusLab
+Leaf-1(config-if-Et1)#isis bfd
+Leaf-1(config-if-Et1)#isis network point-to-point
+Leaf-1(config-if-Et1)#isis authentication mode md5
+Leaf-1(config-if-Et1)#isis authentication key 0 OtusLab3
+Leaf-1(config-if-Et1)#isis circuit-type level-1
+
+
+Leaf-1(config)#int ethernet 2
+Leaf-1(config-if-Et2)#no switchport
+Leaf-1(config-if-Et2)#ip address 10.2.1.1/31
+Leaf-1(config-if-Et2)#bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et2)#ipv6 address E342:4D31:8282:B010:2:1::1/127
+Leaf-1(config-if-Et2)#isis enable OtusLab
+Leaf-1(config-if-Et2)#isis bfd
+Leaf-1(config-if-Et2)#isis network point-to-point
+Leaf-1(config-if-Et2)#isis authentication mode md5
+Leaf-1(config-if-Et2)#isis authentication key 0 OtusLab3
+Leaf-1(config-if-Et2)#isis circuit-type level-1
+
+
+Leaf-1(config)#int loopback 0
+Leaf-1(config-if-Lo0)#ip address  10.0.0.32/32
+Leaf-1(config-if-Lo0)#ipv6 address   E342:4D31:8282:B010:0::10/128
+Leaf-1(config-if-Lo0)#isis enable OtusLab
+
+Leaf-1(config)#int loopback 1
+Leaf-1(config-if-Lo0)#ip address  	10.1.0.32/32
+Leaf-1(config-if-Lo0)#ipv6 address   E342:4D31:8282:B010:1::10/128
+Leaf-1(config-if-Lo0)#isis enable OtusLab
 
 ```
 
@@ -234,6 +356,8 @@ Selector - оставляем неизменным - 00
 ***Включаем глобально ISIS на Spine-1***
 
 ```
+Spine-1(config)#router isis OtusLab
+Spine-1(config-router-isis)#net 49.0001.0001.0001.1000.00
 
 ```
 ![ISIS_hello.png](ISIS_hello.png)
@@ -241,6 +365,8 @@ Selector - оставляем неизменным - 00
 ***Все так же тихо, пока идет только Hello от Spine-1, поднимаем конфигурацию на Leaf-1***
 
 ```
+Leaf-1(config)#router isis OtusLab
+Leaf-1(config-router-isis)#net 49.0001.0001.0001.2000.00
 
 ```
 

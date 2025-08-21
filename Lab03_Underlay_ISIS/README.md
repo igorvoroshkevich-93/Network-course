@@ -271,14 +271,14 @@ Selector - оставляем неизменным - 00
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_ISIS/ISIS_full_conf.md)
 
-Проверим связность, пинганем с Leaf-3 всех
+Проверим связность, пинганем с Spine-2 всех
 
 **Loopback's 0**
 ![ISIS_ping3.png](ISIS_ping2.png)
 **Loopback's 1**
 ![ISIS_ping4.png](ISIS_ping3.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же лифе состояние OSPF
+Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
 
 ![ISIS_leaf-3.png](ISIS_leaf-3.png)
 

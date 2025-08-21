@@ -134,36 +134,36 @@ N - номер клиентского домена
 
 |Device    |Port     |IPv4                               |IPv6                                       |VLAN|Link                           |Comment         |
 |----------|---------|-----------------------------------|-------------------------------------------|----|-------------------------------|----------------|
-|Spine_1   |eth1     |  10.2.0.0/31                      |E342:4D31:8282:B010:2::0/127---------------|911  |Spine_1 eth1 – eth1 Leaf_1    |  Interconnect  |
-|Spine_1   |eth2     |  10.2.0.2/31                      |E342:4D31:8282:B010:2::2/127---------------|911  |Spine_1 eth2 – eth1 Leaf_2    |  Interconnect  |
-|Spine_1   |eth3     |  10.2.0.4/31                      |E342:4D31:8282:B010:2::4/127---------------|911  |Spine_1 eth3 – eth1 Leaf_3    |  Interconnect  |
-|Spine_1   |loopback0|  10.0.0.0/32                      |E342:4D31:8282:B010:0::0/128---------------| --  | None                         |  Loopback      |
-|Spine_1   |loopback1|  10.1.0.0/32                      |E342:4D31:8282:B010:1::0/128---------------| --  | None                         |  Loopback      |
-|Spine_2   |eth1     |  10.2.1.0/31                      |E342:4D31:8282:B010:2:1::0/127-------------|911  |Spine_2 eth1 – eth2 Leaf_1    |  Interconnect  |
-|Spine_2   |eth2     |  10.2.1.2/31                      |E342:4D31:8282:B010:2:1::2/127-------------|911  |Spine_2 eth2 – eth2 Leaf_2    |  Interconnect  |
-|Spine_2   |eth3     |  10.2.1.4/31                      |E342:4D31:8282:B010:2:1::4/127-------------|911  |Spine_2 eth3 – eth2 Leaf_3    |  Interconnect  |
-|Spine_2   |loopback0|  10.0.0.1/32                      |E342:4D31:8282:B010:0::1/128---------------| --  | None                         |  Loopback      |
-|Spine_2   |loopback1|  10.1.0.1/32                      |E342:4D31:8282:B010:1::1/128---------------| --  | None                         |  Loopback      |
-|Leaf_1    |eth1     |  10.2.0.1/31                      |E342:4D31:8282:B010:2::1/127---------------|911  |Leaf_1 eth1 – eth1 Spine_1    |  Interconnect  |
-|Leaf_1    |eth2     |  10.2.1.1/31                      |E342:4D31:8282:B010:2:1::1/127-------------|911  |Leaf_1 eth2 – eth1 Spine_2    |  Interconnect  |
+|Spine_1   |eth1     |  10.2.0.0/31                      |E342:4D31:8282:B010:2::0/127               |911  |Spine_1 eth1 – eth1 Leaf_1    |  Interconnect  |
+|Spine_1   |eth2     |  10.2.0.2/31                      |E342:4D31:8282:B010:2::2/127               |911  |Spine_1 eth2 – eth1 Leaf_2    |  Interconnect  |
+|Spine_1   |eth3     |  10.2.0.4/31                      |E342:4D31:8282:B010:2::4/127               |911  |Spine_1 eth3 – eth1 Leaf_3    |  Interconnect  |
+|Spine_1   |loopback0|  10.0.0.0/32                      |E342:4D31:8282:B010:0::0/128               | --  | None                         |  Loopback      |
+|Spine_1   |loopback1|  10.1.0.0/32                      |E342:4D31:8282:B010:1::0/128               | --  | None                         |  Loopback      |
+|Spine_2   |eth1     |  10.2.1.0/31                      |E342:4D31:8282:B010:2:1::0/127             |911  |Spine_2 eth1 – eth2 Leaf_1    |  Interconnect  |
+|Spine_2   |eth2     |  10.2.1.2/31                      |E342:4D31:8282:B010:2:1::2/127             |911  |Spine_2 eth2 – eth2 Leaf_2    |  Interconnect  |
+|Spine_2   |eth3     |  10.2.1.4/31                      |E342:4D31:8282:B010:2:1::4/127             |911  |Spine_2 eth3 – eth2 Leaf_3    |  Interconnect  |
+|Spine_2   |loopback0|  10.0.0.1/32                      |E342:4D31:8282:B010:0::1/128               | --  | None                         |  Loopback      |
+|Spine_2   |loopback1|  10.1.0.1/32                      |E342:4D31:8282:B010:1::1/128               | --  | None                         |  Loopback      |
+|Leaf_1    |eth1     |  10.2.0.1/31                      |E342:4D31:8282:B010:2::1/127               |911  |Leaf_1 eth1 – eth1 Spine_1    |  Interconnect  |
+|Leaf_1    |eth2     |  10.2.1.1/31                      |E342:4D31:8282:B010:2:1::1/127             |911  |Leaf_1 eth2 – eth1 Spine_2    |  Interconnect  |
 |Leaf_1    |eth7     |  None                             |-------------------------------------------|903  |Leaf_1 eth7  – eth0 Client_1  |  Client        |
-|Leaf_1    |loopback0|  10.0.0.32/32                     |E342:4D31:8282:B010:0::10/128--------------| --  | None                         |  Loopback      |
-|Leaf_1    |loopback1|  10.1.0.32/32                     |E342:4D31:8282:B010:1::10/128--------------| --  | None                         |  Loopback      |
-|Leaf_2    |eth1     |  10.2.0.3/31                      |E342:4D31:8282:B010:2::3/127---------------|911  |Leaf_2 eth1 – eth2 Spine_1    |  Interconnect  |
-|Leaf_2    |eth2     |  10.2.1.3/31                      |E342:4D31:8282:B010:2:1::3/127-------------|911  |Leaf_2 eth2 – eth2 Spine_2    |  Interconnect  |
+|Leaf_1    |loopback0|  10.0.0.32/32                     |E342:4D31:8282:B010:0::10/128              | --  | None                         |  Loopback      |
+|Leaf_1    |loopback1|  10.1.0.32/32                     |E342:4D31:8282:B010:1::10/128              | --  | None                         |  Loopback      |
+|Leaf_2    |eth1     |  10.2.0.3/31                      |E342:4D31:8282:B010:2::3/127               |911  |Leaf_2 eth1 – eth2 Spine_1    |  Interconnect  |
+|Leaf_2    |eth2     |  10.2.1.3/31                      |E342:4D31:8282:B010:2:1::3/127             |911  |Leaf_2 eth2 – eth2 Spine_2    |  Interconnect  |
 |Leaf_2    |eth7     |  None                             |-------------------------------------------|903  |Leaf_2 eth7  – eth0 Client_2  |  Client        |
-|Leaf_2    |loopback0|  10.0.0.33/32                     |E342:4D31:8282:B010:0::11/128--------------| --  | None                         |  Loopback      |
-|Leaf_2    |loopback1|  10.1.0.33/32                     |E342:4D31:8282:B010:1::11/128--------------| --  | None                         |  Loopback      |
-|Leaf_3    |eth1     |  10.2.0.5/31                      |E342:4D31:8282:B010:2::5/127---------------|911  |Leaf_3 eth1 – eth3 Spine_1    |  Interconnect  |
-|Leaf_3    |eth2     |  10.2.1.5/31                      |E342:4D31:8282:B010:2:1::5/127-------------|911  |Leaf_3 eth2 – eth3 Spine_2    |  Interconnect  |
-|Leaf_3    |loopback0|  10.0.0.34/32                     |E342:4D31:8282:B010:0::12/128--------------| --  | None                         |  Loopback      |
-|Leaf_3    |loopback1|  10.1.0.34/32                     |E342:4D31:8282:B010:1::12/128--------------| --  | None                         |  Loopback      |
+|Leaf_2    |loopback0|  10.0.0.33/32                     |E342:4D31:8282:B010:0::11/128              | --  | None                         |  Loopback      |
+|Leaf_2    |loopback1|  10.1.0.33/32                     |E342:4D31:8282:B010:1::11/128              | --  | None                         |  Loopback      |
+|Leaf_3    |eth1     |  10.2.0.5/31                      |E342:4D31:8282:B010:2::5/127               |911  |Leaf_3 eth1 – eth3 Spine_1    |  Interconnect  |
+|Leaf_3    |eth2     |  10.2.1.5/31                      |E342:4D31:8282:B010:2:1::5/127             |911  |Leaf_3 eth2 – eth3 Spine_2    |  Interconnect  |
+|Leaf_3    |loopback0|  10.0.0.34/32                     |E342:4D31:8282:B010:0::12/128              | --  | None                         |  Loopback      |
+|Leaf_3    |loopback1|  10.1.0.34/32                     |E342:4D31:8282:B010:1::12/128              | --  | None                         |  Loopback      |
 |Leaf_3    |eth7     |  None                             |-------------------------------------------|903  |Leaf_3 eth7  – eth0 Client_3  |  Client        |
 |Leaf_3    |eth8     |  None                             |-------------------------------------------|903  |Leaf_3 eth8  – eth0 Client_4  |  Client        |
-|Client_1  |eth0     |  172.16.0.1/24                    |E342:4D31:8282:B010:7:1::1/96--------------|903  |Client_1 eth0 – eth7  Leaf_1  |  Client        |
-|Client_2  |eth0     |  172.16.0.2/24                    |E342:4D31:8282:B010:7:1::2/96--------------|903  |Client_2 eth0 – eth7  Leaf_2  |  Client        |
-|Client_3  |eth0     |  172.16.0.3/24                    |E342:4D31:8282:B010:7:1::3/96--------------|903  |Client_3 eth0 – eth7  Leaf_3  |  Client        |
-|Client_4  |eth0     |  172.16.0.4/24                    |E342:4D31:8282:B010:7:1::4/96--------------|903  |Client_4 eth0 – eth8  Leaf_3  |  Client        |
+|Client_1  |eth0     |  172.16.0.1/24                    |E342:4D31:8282:B010:7:1::1/96              |903  |Client_1 eth0 – eth7  Leaf_1  |  Client        |
+|Client_2  |eth0     |  172.16.0.2/24                    |E342:4D31:8282:B010:7:1::2/96              |903  |Client_2 eth0 – eth7  Leaf_2  |  Client        |
+|Client_3  |eth0     |  172.16.0.3/24                    |E342:4D31:8282:B010:7:1::3/96              |903  |Client_3 eth0 – eth7  Leaf_3  |  Client        |
+|Client_4  |eth0     |  172.16.0.4/24                    |E342:4D31:8282:B010:7:1::4/96              |903  |Client_4 eth0 – eth8  Leaf_3  |  Client        |
 
 Так же, в виду того, что у нас ISIS строит соседство с помощью Network Entity Title соотвествующего формата, вводим таблицу значений, шаблон следующий:
 

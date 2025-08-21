@@ -401,6 +401,7 @@ Leaf-1(config-router-isis)#net 49.0001.0001.0001.2000.00
 
 **Loopback's 0**
 ![ISIS_ping3.png](ISIS_ping2.png)
+
 **Loopback's 1**
 ![ISIS_ping4.png](ISIS_ping3.png)
 

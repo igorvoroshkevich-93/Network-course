@@ -399,7 +399,7 @@ Leaf-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::10/128
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab04_Underlay_iBGP/iBGP_full_conf.md)
 
-Проверим связность, пинганем с Leaf-3 всех
+### Проверим связность, пинганем с Leaf-3 всех
 
 **Loopback's 0**
 
@@ -409,7 +409,7 @@ Leaf-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::10/128
 
 ![iBGP_ping4.png](iBGP_ping4.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние iBGP
+Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Leaf состояние iBGP
 
 ![iBGP_leaf-3.png](iBGP_leaf-3.png)
 

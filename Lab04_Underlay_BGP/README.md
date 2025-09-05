@@ -215,10 +215,88 @@ Leaf-1 будет иметь номер 65101, а Spine-ы - 65100
 
 **Spine-1**
 ```
+localhost(config)#hostname Spine-1
+
+Spine-1(config)#ip routing
+Spine-1(config)#ipv6 unicast-routing 
+
+
+Spine-1(config)#int ethernet 1
+Spine-1(config-if-Et1)#no switchport
+Spine-1(config-if-Et1)#   ip address 10.2.0.0/31
+Spine-1(config-if-Et1)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et1)#   ipv6 address e342:4d31:8282:b010:2::/127
+
+
+
+Spine-1(config)#interface Ethernet2
+Spine-1(config-if-Et2)#   no switchport
+Spine-1(config-if-Et2)#   ip address 10.2.0.2/31
+Spine-1(config-if-Et2)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et2)#   ipv6 address e342:4d31:8282:b010:2::2/127
+
+Spine-1(config)#interface Ethernet3
+Spine-1(config-if-Et3)#   no switchport
+Spine-1(config-if-Et3)#   ip address 10.2.0.4/31
+Spine-1(config-if-Et3)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et3)#   ipv6 address e342:4d31:8282:b010:2::4/127
+
+
+
+Spine-1(config)#interface Loopback0
+Spine-1(config-if-Lo0)#   ip address 10.0.0.0/32
+Spine-1(config-if-Lo0)#   ipv6 address e342:4d31:8282:b010::/128
+
+Spine-1(config)#interface Loopback1
+Spine-1(config-if-Lo1)#   ip address 10.1.0.0/32
+Spine-1(config-if-Lo1)#   ipv6 address e342:4d31:8282:b010:1::/128
+
+Spine-1(config)#ip prefix-list Spine_LB permit 10.0.0.0 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.0.0.32 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.0.0.33 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.0.0.34 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.1.0.0 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.1.0.32 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.1.0.33 255.255.255.255
+Spine-1(config)#ip prefix-list Spine_LB permit 10.1.0.34 255.255.255.255
+
+Spine-1(config)#ipv6 prefix-list Spine_v6LB
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010::/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010::10/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010::11/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010::12/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010:1::/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010:1::10/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010:1::11/128
+Spine-1(config-ipv6-pfx)#permit e342:4d31:8282:b010:1::12/128
 ```
 
 **Leaf-1**
 ```
+localhost(config)#hostname Leaf-1
+
+Leaf-1(config)#ip routing
+Leaf-1(config)#ipv6 unicast-routing
+
+Leaf-1(config)#interface Ethernet1
+Leaf-1(config-if-Et1)#   no switchport
+Leaf-1(config-if-Et1)#   ip address 10.2.0.1/31
+Leaf-1(config-if-Et1)#   bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et1)#   ipv6 address e342:4d31:8282:b010:2::1/127
+
+Leaf-1(config)#interface Ethernet2
+Leaf-1(config-if-Et2)#   no switchport
+Leaf-1(config-if-Et2)#   ip address 10.2.1.1/31
+Leaf-1(config-if-Et2)#   bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et2)#   ipv6 address e342:4d31:8282:b010:2:1:0:1/127
+
+Leaf-1(config)#interface Loopback0
+Leaf-1(config-if-Lo0)#   ip address 10.0.0.32/32
+Leaf-1(config-if-Lo0)#   ipv6 address e342:4d31:8282:b010::10/128
+
+Leaf-1(config-if-Lo0)#interface Loopback1
+Leaf-1(config-if-Lo1)#   ip address 10.1.0.32/32
+Leaf-1(config-if-Lo1)#   ipv6 address e342:4d31:8282:b010:1::10/128
 ```
 
 Проверяем интерконекты по IPv4/IPv6
@@ -234,15 +312,62 @@ Leaf-1 будет иметь номер 65101, а Spine-ы - 65100
 ***Включаем глобально BGP на Spine-1 и преднастраиваем соседство/сессии***
 
 ```
-
+Spine-1(config)#router bgp 65100
+Spine-1(config-router-bgp)#router-id 10.0.0.0
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay peer group
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay remote-as 65100
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay next-hop-self
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay bfd
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay route-reflector-client
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay route-map Loopback out
+Spine-1(config-router-bgp)#neighbor 10.2.0.1 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor 10.2.0.3 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor 10.2.0.5 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::1 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::3 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::5 peer group iBGP_Underlay
+Spine-1(config-router-bgp)#neighbor iBGP_Underlay password Otus_Lab_iBGP_65100
+Spine-1(config-router-bgp)#address-family ipv4
+Spine-1(config-router-bgp-af)#neighbor 10.2.0.1 activate
+Spine-1(config-router-bgp-af)#neighbor 10.2.0.3 activate
+Spine-1(config-router-bgp-af)#neighbor 10.2.0.5 activate
+Spine-1(config-router-bgp-af)#network 10.0.0.0/32
+Spine-1(config-router-bgp-af)#network 10.1.0.0/32
+Spine-1(config-router-bgp)#address-family ipv6
+Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::1 activate
+Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::3 activate
+Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::5 activate
+Spine-1(config-router-bgp-af)#network e342:4d31:8282:b010::/128
+Spine-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::/128
 
 ```
-![iBGP_hello.png](iBGP_hello.png)
 
-***Все так же тихо, пока идет только Hello от Spine-1, поднимаем конфигурацию на Leaf-1***
+***Все так же тихо, поднимаем конфигурацию на Leaf-1***
 
 ```
+Leaf-1(config)#router bgp 65100
+Leaf-1(config-router-bgp)#router-id 10.0.0.32
+Leaf-1(config-router-bgp)#neighbor iBGP_Underlay peer group
+Leaf-1(config-router-bgp)#neighbor iBGP_Underlay remote-as 65100
+Leaf-1(config-router-bgp)#neighbor iBGP_Underlay next-hop-self
+Leaf-1(config-router-bgp)#neighbor iBGP_Underlay bfd
+Leaf-1(config-router-bgp)#neighbor 10.2.0.0 peer group iBGP_Underlay
+Leaf-1(config-router-bgp)#neighbor 10.2.1.0 peer group iBGP_Underlay
+Leaf-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2:: peer group iBGP_Underlay
+Leaf-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2:1:: peer group iBGP_Underlay
 
+Leaf-1(config-router-bgp)#address-family ipv4
+Leaf-1(config-router-bgp-af)#neighbor 10.2.0.0 activate
+Leaf-1(config-router-bgp-af)#neighbor 10.2.1.0 activate
+Leaf-1(config-router-bgp-af)#network 10.0.0.32/32
+Leaf-1(config-router-bgp-af)#network 10.1.0.32/32
+
+
+Leaf-1(config-router-bgp)#address-family ipv6
+Leaf-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2:: activate
+Leaf-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2:1:: activate
+Leaf-1(config-router-bgp-af)#network e342:4d31:8282:b010::10/128
+Leaf-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::10/128
 
 ```
 
@@ -251,6 +376,10 @@ Leaf-1 будет иметь номер 65101, а Spine-ы - 65100
 Прикладываем скрин захвата трафика в момент установления соседства
 
 ![iBGP_full.png](iBGP_full.png)
+
+![iBGP_full_1.png](iBGP_full_1.png)
+
+![iBGP_full_2.png](iBGP_full_2.png)
 
 ### Смотрим состояние соседства на оборудовании и маршрутную таблицу
 
@@ -283,7 +412,7 @@ Leaf-1 будет иметь номер 65101, а Spine-ы - 65100
 
 ![iBGP_ping4.png](iBGP_ping4.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
+Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние iBGP
 
 ![iBGP_leaf-3.png](iBGP_leaf-3.png)
 
@@ -297,7 +426,9 @@ Leaf-1 будет иметь номер 65101, а Spine-ы - 65100
 
 ![iBGP_ping6.png](iBGP_ping6.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
+Все отлично, но
+Spine-2 не пингует Spine-1 - это нормально, мы же не рефлектим роуты от Leaf's, так и должно быть, они не RR
+ну и посмотрим на этом же Spine состояние iBGP
 
 ![iBGP_spine-2.png](iBGP_spine-2.png)
 

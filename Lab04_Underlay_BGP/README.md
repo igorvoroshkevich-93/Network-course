@@ -327,18 +327,15 @@ Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::1 peer group iBGP_Und
 Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::3 peer group iBGP_Underlay
 Spine-1(config-router-bgp)#neighbor e342:4d31:8282:b010:2::5 peer group iBGP_Underlay
 Spine-1(config-router-bgp)#neighbor iBGP_Underlay password Otus_Lab_iBGP_65100
+Spine-1(config-router-bgp)#redistribute connected route-map Loopback
 Spine-1(config-router-bgp)#address-family ipv4
 Spine-1(config-router-bgp-af)#neighbor 10.2.0.1 activate
 Spine-1(config-router-bgp-af)#neighbor 10.2.0.3 activate
 Spine-1(config-router-bgp-af)#neighbor 10.2.0.5 activate
-Spine-1(config-router-bgp-af)#network 10.0.0.0/32
-Spine-1(config-router-bgp-af)#network 10.1.0.0/32
 Spine-1(config-router-bgp)#address-family ipv6
 Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::1 activate
 Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::3 activate
 Spine-1(config-router-bgp-af)#neighbor e342:4d31:8282:b010:2::5 activate
-Spine-1(config-router-bgp-af)#network e342:4d31:8282:b010::/128
-Spine-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::/128
 
 ```
 

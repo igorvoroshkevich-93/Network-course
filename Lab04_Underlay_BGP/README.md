@@ -397,7 +397,7 @@ Leaf-1(config-router-bgp-af)#network e342:4d31:8282:b010:1::10/128
 
 ### Аналогично поднимаем настройки для всех Leaf и Spine и проверим связность
 
-Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab04_Underlay_iBGP/iBGP_full_conf.md)
+Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab04_Underlay_BGP/iBGP_full_conf.md)
 
 ### Проверим связность, пинганем с Leaf-3 всех
 
@@ -641,7 +641,7 @@ Leaf-1(config-router-bgp-af)#      network e342:4d31:8282:b010:1::10/128
 
 ### Аналогично поднимаем настройки для всех Leaf и Spine и проверим связность
 
-Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab04_Underlay_eBGP/eBGP_full_conf.md)
+Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab04_Underlay_BGP/eBGP_full_conf.md)
 
 Проверим связность, пинганем с Leaf-3 всех
 

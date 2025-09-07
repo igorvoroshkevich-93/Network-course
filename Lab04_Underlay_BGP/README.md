@@ -443,10 +443,102 @@ Spine-2 не пингует Spine-1 - это нормально, мы же не 
 
 **Spine-1**
 ```
+localhost(config)#hostname Spine-1
+
+Spine-1(config)#interface Ethernet1
+Spine-1(config-if-Et1)#   no switchport
+Spine-1(config-if-Et1)#   ip address 10.2.0.0/31
+Spine-1(config-if-Et1)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et1)#   ipv6 address e342:4d31:8282:b010:2::/127
+
+Spine-1(config-if-Et1)#interface Ethernet2
+Spine-1(config-if-Et2)#   no switchport
+Spine-1(config-if-Et2)#   ip address 10.2.0.2/31
+Spine-1(config-if-Et2)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et2)#   ipv6 address e342:4d31:8282:b010:2::2/127
+
+Spine-1(config-if-Et2)#interface Ethernet3
+Spine-1(config-if-Et3)#   no switchport
+Spine-1(config-if-Et3)#   ip address 10.2.0.4/31
+Spine-1(config-if-Et3)#   bfd interval 100 min-rx 100 multiplier 3
+Spine-1(config-if-Et3)#   ipv6 address e342:4d31:8282:b010:2::4/127
+
+Spine-1(config-if-Et3)#interface Loopback0
+Spine-1(config-if-Lo0)#   ip address 10.0.0.0/32
+Spine-1(config-if-Lo0)#   ipv6 address e342:4d31:8282:b010::/128
+
+Spine-1(config-if-Lo0)#interface Loopback1
+Spine-1(config-if-Lo1)#   ip address 10.1.0.0/32
+Spine-1(config-if-Lo1)#   ipv6 address e342:4d31:8282:b010:1::/128
+
+Spine-1(config-if-Lo1)#ip routing
+
+Spine-1(config)#ip prefix-list Spine_LB seq 10 permit 10.0.0.0/32
+Spine-1(config)#ip prefix-list Spine_LB seq 20 permit 10.1.0.0/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 10 permit 10.0.0.32/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 20 permit 10.0.0.33/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 30 permit 10.0.0.34/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 40 permit 10.1.0.32/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 50 permit 10.1.0.33/32
+Spine-1(config)#ip prefix-list Leaf_LB seq 60 permit 10.1.0.34/32
+
+Spine-1(config)#ipv6 prefix-list Spine_v6LB
+Spine-1(config-ipv6-pfx)#   seq 10 permit e342:4d31:8282:b010::/128
+Spine-1(config-ipv6-pfx)#   seq 20 permit e342:4d31:8282:b010:1::/128
+Spine-1(config-ipv6-pfx)#ipv6 prefix-list Leaf_v6LB
+Spine-1(config-ipv6-pfx)#   seq 10 permit e342:4d31:8282:b010::10/128
+Spine-1(config-ipv6-pfx)#   seq 20 permit e342:4d31:8282:b010::11/128
+Spine-1(config-ipv6-pfx)#   seq 30 permit e342:4d31:8282:b010::12/128
+Spine-1(config-ipv6-pfx)#   seq 40 permit e342:4d31:8282:b010:1::10/128
+Spine-1(config-ipv6-pfx)#   seq 50 permit e342:4d31:8282:b010:1::11/128
+Spine-1(config-ipv6-pfx)#   seq 60 permit e342:4d31:8282:b010:1::12/128
+Spine-1(config-ipv6-pfx)#!
+Spine-1(config-ipv6-pfx)#ipv6 unicast-routing
+
+Spine-1(config)#route-map Loopback permit 10
+Spine-1(config-route-map-Loopback_Spine)#   match ip address prefix-list Spine_LB 
+Spine-1(config-route-map-Loopback_Spine)#!
+Spine-1(config-route-map-Loopback_Spine)#route-map Loopback permit 20
+Spine-1(config-route-map-Loopback_Spine)#   match ipv6 address prefix-list Spine_v6LB
+Spine-1(config-route-map-Loopback_Spine)#!
+Spine-1(config-route-map-Loopback_Spine)#route-map Loopback permit 30
+Spine-1(config-route-map-Loopback_Leaf)#   match ip address prefix-list Leaf_LB
+Spine-1(config-route-map-Loopback_Leaf)#!
+Spine-1(config-route-map-Loopback_Leaf)#route-map Loopbackpermit 40
+Spine-1(config-route-map-Loopback_Leaf)#   match ipv6 address prefix-list Leaf_v6LB
+Spine-1(config-route-map-Loopback_Leaf)#!
+Spine-1(config-route-map-Loopback_Leaf)#peer-filter ASN_Leafs
+Spine-1(config-peer-filter-ASN_Leafs)#10 match as-range 65101-65199 result accet
+Spine-1(config-peer-filter-ASN_Leafs)#end
 ```
 
 **Leaf-1**
 ```
+localhost(config)#hostname Leaf-1
+
+Leaf-1(config)#interface Ethernet1
+Leaf-1(config-if-Et1)#   no switchport
+Leaf-1(config-if-Et1)#   ip address 10.2.0.1/31
+Leaf-1(config-if-Et1)#   bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et1)#   ipv6 address e342:4d31:8282:b010:2::1/127
+
+Leaf-1(config-if-Et1)#interface Ethernet2
+Leaf-1(config-if-Et2)#   no switchport
+Leaf-1(config-if-Et2)#   ip address 10.2.1.1/31
+Leaf-1(config-if-Et2)#   bfd interval 100 min-rx 100 multiplier 3
+Leaf-1(config-if-Et2)#   ipv6 address e342:4d31:8282:b010:2:1:0:1/127
+
+Leaf-1(config-if-Et2)#interface Loopback0
+Leaf-1(config-if-Lo0)#   ip address 10.0.0.32/32
+Leaf-1(config-if-Lo0)#   ipv6 address e342:4d31:8282:b010::10/128
+
+Leaf-1(config-if-Lo0)#interface Loopback1
+Leaf-1(config-if-Lo1)#   ip address 10.1.0.32/32
+Leaf-1(config-if-Lo1)#   ipv6 address e342:4d31:8282:b010:1::10/128
+
+Leaf-1(config-if-Lo1)#ip routing
+
+Leaf-1(config)#ipv6 unicast-routing
 ```
 
 Проверяем интерконекты по IPv4/IPv6
@@ -462,6 +554,31 @@ Spine-2 не пингует Spine-1 - это нормально, мы же не 
 ***Включаем глобально BGP на Spine-1 и преднастраиваем соседство/сессии***
 
 ```
+Spine-1(config)#router bgp 65100
+Spine-1(config-router-bgp)#   router-id 10.0.0.0
+Spine-1(config-router-bgp)#   bgp listen range 10.2.0.0/29 peer-group eBGP_Underlay peer-filter ASN_Leafs
+Spine-1(config-router-bgp)#   neighbor eBGP_Underlay peer group
+Spine-1(config-router-bgp)#   neighbor eBGP_Underlay bfd
+Spine-1(config-router-bgp)#   neighbor eBGP_Underlay timers 3 9
+Spine-1(config-router-bgp)#   neighbor eBGP_Underlay route-map Loopback out
+Spine-1(config-router-bgp)#   neighbor eBGP_Underlay password Otus_Lab_eBGP
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::1 peer group eBGP_Underlay
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::1 remote-as 65101
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::3 peer group eBGP_Underlay
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::3 remote-as 65102
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::5 peer group eBGP_Underlay
+Spine-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2::5 remote-as 65103
+Spine-1(config-router-bgp)#   redistribute connected route-map Loopback
+
+Spine-1(config-router-bgp)#   address-family ipv4
+Spine-1(config-router-bgp-af)#      neighbor 10.2.0.1 activate
+Spine-1(config-router-bgp-af)#      neighbor 10.2.0.3 activate
+Spine-1(config-router-bgp-af)#      neighbor 10.2.0.5 activate
+Spine-1(config-router-bgp-af)#   !
+Spine-1(config-router-bgp-af)#   address-family ipv6
+Spine-1(config-router-bgp-af)#      neighbor e342:4d31:8282:b010:2::1 activate
+Spine-1(config-router-bgp-af)#      neighbor e342:4d31:8282:b010:2::3 activate
+Spine-1(config-router-bgp-af)#      neighbor e342:4d31:8282:b010:2::5 activate
 
 
 ```
@@ -470,6 +587,30 @@ Spine-2 не пингует Spine-1 - это нормально, мы же не 
 ***Все так же тихо, пока идет только Hello от Spine-1, поднимаем конфигурацию на Leaf-1***
 
 ```
+Leaf-1(config)#router bgp 65101
+Leaf-1(config-router-bgp)#   router-id 10.0.0.32
+Leaf-1(config-router-bgp)#   maximum-paths 2
+Leaf-1(config-router-bgp)#   neighbor eBGP_Underlay peer group
+Leaf-1(config-router-bgp)#   neighbor eBGP_Underlay remote-as 65100
+Leaf-1(config-router-bgp)#   neighbor eBGP_Underlay bfd
+Leaf-1(config-router-bgp)#   neighbor eBGP_Underlay timers 3 9
+Leaf-1(config-router-bgp)#   neighbor eBGP_Underlay password Otus_Lab_eBGP
+Leaf-1(config-router-bgp)#   neighbor 10.2.0.0 peer group eBGP_Underlay
+Leaf-1(config-router-bgp)#   neighbor 10.2.1.0 peer group eBGP_Underlay
+Leaf-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2:: peer group eBGP_Underlay
+Leaf-1(config-router-bgp)#   neighbor e342:4d31:8282:b010:2:1:: peer group eBGP_Underlay
+Leaf-1(config-router-bgp)#   !
+Leaf-1(config-router-bgp)#   address-family ipv4
+Leaf-1(config-router-bgp-af)#      neighbor 10.2.0.0 activate
+Leaf-1(config-router-bgp-af)#      neighbor 10.2.1.0 activate
+Leaf-1(config-router-bgp-af)#      network 10.0.0.32/32
+Leaf-1(config-router-bgp-af)#      network 10.1.0.32/32
+Leaf-1(config-router-bgp-af)#   !
+Leaf-1(config-router-bgp-af)#   address-family ipv6
+Leaf-1(config-router-bgp-af)#      neighbor e342:4d31:8282:b010:2:: activate
+Leaf-1(config-router-bgp-af)#      neighbor e342:4d31:8282:b010:2:1:: activate
+Leaf-1(config-router-bgp-af)#      network e342:4d31:8282:b010::10/128
+Leaf-1(config-router-bgp-af)#      network e342:4d31:8282:b010:1::10/128
 
 
 ```
@@ -484,11 +625,13 @@ Spine-2 не пингует Spine-1 - это нормально, мы же не 
 
 **Leaf-1**
 
-![eBGP_leaf-1.png](eBGP_leaf-1.png)
+![eBGP_leaf-1-1.png](eBGP_leaf-1-1.png)
+![eBGP_leaf-1-2.png](eBGP_leaf-1-2.png)
 
 **Spine-1**
 
-![eBGP_spine-1.png](eBGP_spine-1.png)
+![eBGP_spine-1-1.png](eBGP_spine-1-1.png)
+![eBGP_spine-1-2.png](eBGP_spine-1-2.png)
 
 Так, вроде все хорошо, проверим связность лупбеков 0 и 1
 
@@ -505,28 +648,36 @@ Spine-2 не пингует Spine-1 - это нормально, мы же не 
 
 **Loopback's 0**
 
-![eBGP_ping3.png](eBGP_ping3.png)
+![eBGP_ping3-1.png](eBGP_ping3-1.png)
+![eBGP_ping3-2.png](eBGP_ping3-2.png)
 
 **Loopback's 1**
 
-![eBGP_ping4.png](eBGP_ping4.png)
+![eBGP_ping4-1.png](eBGP_ping4-1.png)
+![eBGP_ping4-2.png](eBGP_ping4-2.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
+Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Leaf состояние eBGP
 
-![eBGP_leaf-3.png](eBGP_leaf-3.png)
+![eBGP_leaf-3-1.png](eBGP_leaf-3-1.png)
+![eBGP_leaf-3-2.png](eBGP_leaf-3-2.png)
 
 ### Так же просмотрим и проверим все со Spine-2
 
 **Loopback's 0**
 
-![eBGP_ping5.png](eBGP_ping5.png)
+![eBGP_ping5-1.png](eBGP_ping5-1.png)
+![eBGP_ping5-2.png](eBGP_ping5-2.png)
 
 **Loopback's 1**
 
-![eBGP_ping6.png](eBGP_ping6.png)
+![eBGP_ping6-1.png](eBGP_ping6-1.png)
+![eBGP_ping6-2.png](eBGP_ping6-2.png)
 
-Все отлично, всех видим, все хорошо, ну и посмотрим на этом же Spine состояние ISIS
+Все отлично, но
+Spine-2 не пингует Spine-1 - это нормально, мы же не передаем роуты Spine-ов от Leaf's к ним же
+ну и посмотрим на этом же Spine состояние eBGP
 
-![eBGP_spine-2.png](eBGP_spine-2.png)
+![eBGP_spine-2-1.png](eBGP_spine-2-1.png)
+![eBGP_spine-2-2.png](eBGP_spine-2-2.png)
 
 </details>

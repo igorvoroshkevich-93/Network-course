@@ -65,7 +65,7 @@ hostname Leaf-1
 vlan 903
    name Clients_903
 !
-Interface EthernetX
+Interface Ethernet7
    switchport mode access
    switchport access vlan 903
 
@@ -88,7 +88,7 @@ router bgp 65100
       neighbor EVPN_Overlay activate
    !
    vlan 903
-      rd 10.1.0.32:10903
+      rd 10.1.0.32:109030
       route-target both evpn 65100:109030
       redistribute learned
 
@@ -98,7 +98,7 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 903 vni 10903
+  vxlan vlan 903 vni 109030
 !
 ```
 
@@ -110,7 +110,7 @@ hostname Leaf-2
 vlan 904
    name Clients_904
 !
-Interface EthernetY
+Interface Ethernet7
    switchport mode access
    switchport access vlan 904
 
@@ -133,7 +133,7 @@ router bgp 65100
       neighbor EVPN_Overlay activate
    !
    vlan 904
-      rd 10.1.0.33:10904
+      rd 10.1.0.33:109040
       route-target both evpn 65100:109040
       redistribute learned
 
@@ -143,7 +143,7 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 904 vni 10904
+  vxlan vlan 904 vni 109040
 !
 ```
 
@@ -158,11 +158,11 @@ vlan 903
 vlan 904
    name Clients_904
 !
-Interface EthernetX
+Interface Ethernet7
    switchport mode access
    switchport access vlan 903
 
-Interface EthernetY
+Interface Ethernet8
    switchport mode access
    switchport access vlan 904
 
@@ -185,11 +185,11 @@ router bgp 65100
       neighbor EVPN_Overlay activate
    !
    vlan 903
-      rd 10.1.0.34:10903
+      rd 10.1.0.34:109030
       route-target both evpn 65100:109030
       redistribute learned
    vlan 904
-      rd 10.1.0.34:10904
+      rd 10.1.0.34:109040
       route-target both evpn 65100:109040
       redistribute learned
 
@@ -199,31 +199,31 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 903 vni 10903
-  vxlan vlan 904 vni 10904
+  vxlan vlan 903 vni 109030
+  vxlan vlan 904 vni 109040
 !
 ```
 
 **Client-1**
 
 ```
-
+ip address 172.16.0.2/24
 ```
 
 **Client-2**
 
 ```
-
+ip address 172.16.1.2/24
 ```
 
 **Client-3**
 
 ```
-
+ip address 172.16.0.3/24
 ```
 
 **Client-4**
 
 ```
-
+ip address 172.16.1.3/24
 ```

@@ -1,8 +1,8 @@
 
 
-# Домашнее задание 5 Overlay. iBGP-ISIS
+# Домашнее задание 6 Overlay. eBGP-OSPF
 
-## Цель: Настроить iBGP-ISIS для Overlay сети.
+## Цель: Настроить eBGP-OSPF для Overlay сети.
 
 **Описание/Пошаговая инструкция выполнения домашнего задания:**
 В этой самостоятельной работе мы ожидаем, что вы самостоятельно:
@@ -14,8 +14,8 @@
 # Выполнение Задания
 
 Настраиваем на базе Underlay ISIS.
-Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab05_Overlay_EVPN_L2/ISIS_full_conf.md)
-Работоспособность подтверждена [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab03_Underlay_ISIS/README.md)
+Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab05_Overlay_EVPN_L2/OSPF_full_conf.md)
+Работоспособность подтверждена [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_OSPF/README.md)
 
 ## Новая схема сети(Все та же)
 
@@ -195,7 +195,8 @@ N - номер клиентского домена
 10. Настраиваем EVPN BGP, соседи, рассширенное комьюнити, авторизация.
 11. Проверяем соседство, маршруты.
 12. Инициализируем binding vlan to vxlan, предварительно создав интерфейс для инкапсуляции/деинкапсуляции
-13. Проверяем связность клиентских хостов, прикладываем везде где можно дампы трафика.
+13. Создаем VRF для Symmetric IRB на всех Leaf
+14. Проверяем связность клиентских хостов, прикладываем везде где можно дампы трафика.
 
 # Приступаем к выполнению
 
@@ -258,20 +259,59 @@ N - номер клиентского домена
 
 ![EVPN_spine-1.png](EVPN_spine-1.png)
 
-***Роуты есть, соседство установилось, проливаем Spine-2  и связываем фабрику воедино***
+***Cоседство установилось, проливаем Spine-2***
+
+**Spine-2**
 
 ```
 ```
 
 Ну и смотрим как тут дела
 
+![EVPN_spine-2.png](EVPN_spine-2.png)
+
+***Создаем Vxlan, поднимаем VRF смотрим роуты и состедство***
+
+Проливаем конфиг
+
+**Leaf-1**
+```
+```
+
+**Leaf-2**
+```
+```
+
+**Leaf-3**
+```
+```
+
+Смотрим роуты и соседство
+
+**Spine-1**
+
+![EVPN_spine-1-2.png](EVPN_spine-1-2.png)
+
 **Spine-2**
 
-![EVPN_spine-2.png](EVPN_spine-2.png)
+![EVPN_spine-2-2.png](EVPN_spine-2-2.png)
+
+**Leaf-1**
+
+![EVPN_leaf-1-2.png](EVPN_leaf-1-2.png)
+
+**Leaf-2**
+
+![EVPN_leaf-2-2.png](EVPN_leaf-2-2.png)
+
+**Leaf-3**
+
+![EVPN_leaf-3-2.png](EVPN_leaf-3-2.png)
+
 
 ### Поднимаем конфигурацию на клиентах, проверяем связность.
 
-КОнфигурацию писать не вижу смысла, она будет в общем файле, просто пингуем и смотрим в дамп трафика
+Конфигурацию писать не вижу смысла, она будет в общем файле, просто пингуем и смотрим в дамп трафика
 
 **Client-1 PING+DUMP**
 
@@ -315,4 +355,26 @@ N - номер клиентского домена
 
 ### Все работает, связность есть
 
-Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab05_Overlay_EVPN_L2/EVPN_full_conf.md)
+#### Скрины соседства роутов BFD, VxLan(на Leaf)
+
+**Spine-1**
+
+![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+
+**Spine-2**
+
+![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+
+**Leaf-1**
+
+![EVPN_leaf-1-3.png](EVPN_leaf-1-3.png)
+
+**Leaf-2**
+
+![EVPN_leaf-2-3.png](EVPN_leaf-2-3.png)
+
+**Leaf-3**
+
+![EVPN_leaf-3-3.png](EVPN_leaf-3-3.png)
+
+Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L3/EVPN_L3_full_conf.md)

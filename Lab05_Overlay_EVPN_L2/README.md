@@ -207,6 +207,25 @@ N - номер клиентского домена
 ### Прольем сначала конфиг на Spine-1
 
 ```
+Spine-1(config)#router bgp 65100
+Spine-1(config-router-bgp)#   router-id 10.1.0.0
+Spine-1(config-router-bgp)#   maximum-paths 2 ecmp 2
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay route-reflector-client
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay bfd
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
+Spine-1(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Spine-1(config-router-bgp)#   neighbor 10.1.0.32 peer group EVPN_Overlay
+Spine-1(config-router-bgp)#   neighbor 10.1.0.33 peer group EVPN_Overlay
+Spine-1(config-router-bgp)#   neighbor 10.1.0.34 peer group EVPN_Overlay
+Spine-1(config-router-bgp)#   redistribute connected route-map Loopback
+Spine-1(config-router-bgp)#   !
+Spine-1(config-router-bgp)#   address-family evpn
+Spine-1(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+
 ```
 
 ### Включим захват трафика на интерфесах лифов в сторону этого Spine
@@ -215,14 +234,65 @@ N - номер клиентского домена
 
 **Leaf-1**
 ```
+Leaf-1(config)#router bgp 65100
+Leaf-1(config-router-bgp)#   router-id 10.1.0.32
+Leaf-1(config-router-bgp)#   maximum-paths 2 ecmp 2
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay bfd
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
+Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Leaf-1(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
+Leaf-1(config-router-bgp)#   neighbor 10.1.0.1 peer group EVPN_Overlay
+Leaf-1(config-router-bgp)#   redistribute connected route-map Loopback
+Leaf-1(config-router-bgp)#   !
+Leaf-1(config-router-bgp)#   address-family evpn
+Leaf-1(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+
 ```
 
 **Leaf-2**
 ```
+Leaf-2(config)#router bgp 65100
+Leaf-2(config-router-bgp)#   router-id 10.1.0.33
+Leaf-2(config-router-bgp)#   maximum-paths 2
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay bfd
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
+Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Leaf-2(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
+Leaf-2(config-router-bgp)#   neighbor 10.1.0.1 peer group EVPN_Overlay
+Leaf-2(config-router-bgp)#   redistribute connected route-map Loopback
+Leaf-2(config-router-bgp)#   !
+Leaf-2(config-router-bgp)#   address-family evpn
+Leaf-2(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+
 ```
 
 **Leaf-3**
 ```
+Leaf-3(config)#router bgp 65100
+Leaf-3(config-router-bgp)#   router-id 10.1.0.34
+Leaf-3(config-router-bgp)#   maximum-paths 2
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay bfd
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
+Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Leaf-3(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
+Leaf-3(config-router-bgp)#   neighbor 10.1.0.1 peer group EVPN_Overlay
+Leaf-3(config-router-bgp)#   redistribute connected route-map Loopback
+Leaf-3(config-router-bgp)#   !
+Leaf-3(config-router-bgp)#   address-family evpn
+Leaf-3(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+
 ```
 
 Видим, как побежали пакеты, устанавливается соседство
@@ -239,38 +309,146 @@ N - номер клиентского домена
 
 ![EVPN_full-3.png](EVPN_full-3.png)
 
-Смотрим таблицу соседства и что у нас по роутам
+Смотрим таблицу соседства
 
 **Leaf-1**
 
-![EVPN_leaf-1.png](EVPN_leaf-1.png)
+![EVPN_leaf-1-1.png](EVPN_leaf-1-1.png)
 
 **Leaf-2**
 
-![EVPN_leaf-2.png](EVPN_leaf-2.png)
+![EVPN_leaf-2-1.png](EVPN_leaf-2-1.png)
 
 **Leaf-3**
 
-![EVPN_leaf-3.png](EVPN_leaf-3.png)
+![EVPN_leaf-3-1.png](EVPN_leaf-3-1.png)
 
 **Spine-1**
 
-![EVPN_spine-1.png](EVPN_spine-1.png)
+![EVPN_spine-1-1.png](EVPN_spine-1-1.png)
 
-***Роуты есть, соседство установилось, проливаем Spine-2  и связываем фабрику воедино***
+***Cоседство установилось, проливаем Spine-2***
 
 ```
+Spine-2(config-router-bgp)#   router-id 10.1.0.1
+Spine-2(config-router-bgp)#   maximum-paths 2 ecmp 2
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay route-reflector-client
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay bfd
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
+Spine-2(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Spine-2(config-router-bgp)#   neighbor 10.1.0.32 peer group EVPN_Overlay
+Spine-2(config-router-bgp)#   neighbor 10.1.0.33 peer group EVPN_Overlay
+Spine-2(config-router-bgp)#   neighbor 10.1.0.34 peer group EVPN_Overlay
+Spine-2(config-router-bgp)#   redistribute connected route-map Loopback
+Spine-2(config-router-bgp)#   !
+Spine-2(config-router-bgp)#   address-family evpn
+Spine-2(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+
 ```
 
-Ну и смотрим как тут дела
+***Создаем Vxlan смотрим роуты и состедство***
+
+Смотрим таблицу соседства
+
+**Leaf-1**
+```
+Leaf-1(config)#vlan 903
+Leaf-1(config-vlan-903)#   name Clients_903
+Leaf-1(config-vlan-903)#Interface Ethernet7
+Leaf-1(config-if-Et7)#   switchport mode access
+Leaf-1(config-if-Et7)#   switchport access vlan 903
+Leaf-1(config-if-Et7)#int vxlan1
+Leaf-1(config-if-Vx1)#  vxlan source-int lo1
+Leaf-1(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-1(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-1(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-1(config)#router bgp 65100
+Leaf-1(config-router-bgp)#   address-family evpn
+Leaf-1(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+Leaf-1(config-router-bgp-af)#   vlan 903
+Leaf-1(config-macvrf-903)#      rd 10.1.0.32:10903
+Leaf-1(config-macvrf-903)#      route-target both 65100:10903
+Leaf-1(config-macvrf-903)#      redistribute learned
+```
+
+![EVPN_leaf-1-2.png](EVPN_leaf-1-2.png)
+
+**Leaf-2**
+
+```
+Leaf-2(config)#vlan 904
+Leaf-2(config-vlan-904)#   name Clients_904
+Leaf-2(config-vlan-904)#!
+Leaf-2(config-vlan-904)#Interface Ethernet7
+Leaf-2(config-if-Et7)#   switchport mode access
+Leaf-2(config-if-Et7)#   switchport access vlan 904
+Leaf-2(config-if-Et7)#
+Leaf-2(config-if-Et7)#!
+Leaf-2(config-if-Et7)#int vxlan1
+Leaf-2(config-if-Vx1)#  vxlan source-int lo1
+Leaf-2(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-2(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-2(config-if-Vx1)#  vxlan vlan 904 vni 10904
+Leaf-2(config-if-Vx1)#exit
+Leaf-2(config)#router bgp 65100
+Leaf-2(config-router-bgp)#vlan 904
+Leaf-2(config-macvrf-904)#rd 10.1.0.33:10904
+Leaf-2(config-macvrf-904)#route-target both 65100:10904
+Leaf-2(config-macvrf-904)#redistribute learned
+```
+
+
+![EVPN_leaf-2-2.png](EVPN_leaf-2-2.png)
+
+**Leaf-3**
+
+```
+Leaf-3(config)#vlan 903
+!Leaf-3(config-vlan-903)#   name Clients_903
+Leaf-3(config-vlan-903)#vlan 904
+Leaf-3(config-vlan-904)#   name Clients_904
+Leaf-3(config-vlan-904)#Interface Ethernet7
+Leaf-3(config-if-Et7)#   switchport mode access
+Leaf-3(config-if-Et7)#   switchport access vlan 903
+Leaf-3(config-if-Et7)#Interface Ethernet8
+Leaf-3(config-if-Et8)#   switchport mode access
+Leaf-3(config-if-Et8)#   switchport access vlan 904
+Leaf-3(config-if-Et8)#int vxlan1
+Leaf-3(config-if-Vx1)#  vxlan source-int lo1
+Leaf-3(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-3(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-3(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-3(config-if-Vx1)#  vxlan vlan 904 vni 10904
+Leaf-3(config)#router bgp 65100
+Leaf-3(config-router-bgp)#   vlan 903
+Leaf-3(config-macvrf-903)#      rd 10.1.0.34:10903
+Leaf-3(config-macvrf-903)#      route-target both 65100:10903
+Leaf-3(config-macvrf-903)#      redistribute learned
+Leaf-3(config-macvrf-903)#   vlan 904
+Leaf-3(config-macvrf-904)#      rd 10.1.0.34:10904
+Leaf-3(config-macvrf-904)#      route-target both 65100:10904
+Leaf-3(config-macvrf-904)#      redistribute learned
+
+```
+
+![EVPN_leaf-3-2.png](EVPN_leaf-3-2.png)
+
+**Spine-1**
+
+![EVPN_spine-1-2.png](EVPN_spine-1-2.png)
 
 **Spine-2**
 
-![EVPN_spine-2.png](EVPN_spine-2.png)
+![EVPN_spine-2-2.png](EVPN_spine-2-2.png)
+
 
 ### Поднимаем конфигурацию на клиентах, проверяем связность.
 
-КОнфигурацию писать не вижу смысла, она будет в общем файле, просто пингуем и смотрим в дамп трафика
+Конфигурацию писать не вижу смысла, она будет в общем файле, просто пингуем и смотрим в дамп трафика
 
 **Client-1 PING+DUMP**
 
@@ -313,5 +491,27 @@ N - номер клиентского домена
 ![EVPN_client-4_dump.png](EVPN_client-4_dump.png)
 
 ### Все работает, связность есть
+
+#### Скрины соседства роутов BFD
+
+**Spine-1**
+
+![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+
+**Spine-2**
+
+![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+
+**Leaf-1**
+
+![EVPN_leaf-1-3.png](EVPN_leaf-1-3.png)
+
+**Leaf-2**
+
+![EVPN_leaf-2-3.png](EVPN_leaf-2-3.png)
+
+**Leaf-3**
+
+![EVPN_leaf-3-3.png](EVPN_leaf-3-3.png)
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab05_Overlay_EVPN_L2/EVPN_full_conf.md)

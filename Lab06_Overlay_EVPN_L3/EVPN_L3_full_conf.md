@@ -1,7 +1,7 @@
 **Spine-1**
 
 ```
-hostname Spine-1
+service routing protocols model multi-agent
 
 !
 ip prefix-list Leaf_LB seq 10 permit 10.0.0.32/32
@@ -47,7 +47,7 @@ end
 **Spine-2**
 
 ```
-hostname Spine-2
+service routing protocols model multi-agent
 
 !
 ip prefix-list Leaf_LB seq 10 permit 10.0.0.32/32
@@ -95,7 +95,7 @@ end
 **Leaf-1**
 
 ```
-hostname Leaf-1
+service routing protocols model multi-agent
 !
 vlan 903
    name Clients_903
@@ -156,7 +156,7 @@ int vxlan1
 **Leaf-2**
 
 ```
-hostname Leaf-2
+service routing protocols model multi-agent
 !
 vlan 904
    name Clients_904
@@ -217,7 +217,7 @@ int vxlan1
 **Leaf-3**
 
 ```
-hostname Leaf-3
+service routing protocols model multi-agent
 !
 vlan 903
    name Clients_905

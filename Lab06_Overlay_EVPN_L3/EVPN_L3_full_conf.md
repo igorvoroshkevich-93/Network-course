@@ -32,7 +32,8 @@ router bgp 65100
    neighbor EVPN_Overlay route-reflector-client
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd
+   neighbor EVPN_Overlay bfd 
+   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
    redistribute connected route-map Loopback
@@ -78,7 +79,8 @@ router bgp 65100
    neighbor EVPN_Overlay route-reflector-client
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd
+   neighbor EVPN_Overlay bfd 
+   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
    redistribute connected route-map Loopback
@@ -121,7 +123,8 @@ router bgp 65101
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd
+   neighbor EVPN_Overlay bfd 
+   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
    neighbor 10.1.0.0 peer group EVPN_Overlay
@@ -132,13 +135,13 @@ router bgp 65101
       neighbor EVPN_Overlay activate
    !
    vlan 903
-      rd 10.1.0.32:109030
-      route-target both evpn 65100:109030
+      rd 10.1.0.32:10903
+      route-target both evpn 65100:10903
       redistribute learned
    vrf Otus_Symmetric_L3
-      rd 10.1.0.32:109990
-      route-target import evpn 65100:109990
-      route-target export evpn 65100:109990
+      rd 10.1.0.32:10999
+      route-target import evpn 65100:10999
+      route-target export evpn 65100:10999
       redistribute learned
       redistribute connected
 
@@ -148,8 +151,8 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 903 vni 109030
-  vxlan vrf Otus_Symmetric_L3 vni 109990
+  vxlan vlan 903 vni 10903
+  vxlan vrf Otus_Symmetric_L3 vni 10999
 !
 ```
 
@@ -182,7 +185,8 @@ router bgp 65102
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd
+   neighbor EVPN_Overlay bfd 
+   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
    neighbor 10.1.0.0 peer group EVPN_Overlay
@@ -193,13 +197,13 @@ router bgp 65102
       neighbor EVPN_Overlay activate
    !
    vlan 904
-      rd 10.1.0.33:109040
-      route-target both evpn 65100:109040
+      rd 10.1.0.33:10904
+      route-target both evpn 65100:10904
       redistribute learned
    vrf Otus_Symmetric_L3
-      rd 10.1.0.33:109990
-      route-target import evpn 65100:109990
-      route-target export evpn 65100:109990
+      rd 10.1.0.33:10999
+      route-target import evpn 65100:10999
+      route-target export evpn 65100:10999
       redistribute learned
       redistribute connected
 
@@ -210,7 +214,7 @@ int vxlan1
   vxlan udp-port 4789
   vxlan learn-restrict any
   vxlan vlan 904 vni 109040
-  vxlan vrf Otus_Symmetric_L3 vni 109990
+  vxlan vrf Otus_Symmetric_L3 vni 10999
 !
 ```
 
@@ -254,7 +258,8 @@ router bgp 65103
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd
+   neighbor EVPN_Overlay bfd 
+   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
    neighbor 10.0.0.0 peer group EVPN_Overlay
@@ -265,17 +270,17 @@ router bgp 65103
       neighbor EVPN_Overlay activate
    !
    vlan 905
-      rd 10.1.0.34:109050
-      route-target both evpn 65100:109050
+      rd 10.1.0.34:10905
+      route-target both evpn 65100:10905
       redistribute learned
    vlan 906
-      rd 10.1.0.34:109060
-      route-target both evpn 65100:109060
+      rd 10.1.0.34:10906
+      route-target both evpn 65100:10906
       redistribute learned
    vrf Otus_Symmetric_L3
-      rd 10.1.0.34:109990
-      route-target import evpn 65100:109990
-      route-target export evpn 65100:109990
+      rd 10.1.0.34:10999
+      route-target import evpn 65100:10999
+      route-target export evpn 65100:10999
       redistribute learned
       redistribute connected
 
@@ -286,36 +291,32 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 905 vni 109050
-  vxlan vlan 906 vni 109060
-  vxlan vrf Otus_Symmetric_L3 vni 109990
+  vxlan vlan 905 vni 10905
+  vxlan vlan 906 vni 10906
+  vxlan vrf Otus_Symmetric_L3 vni 10999
 !
 ```
 
 **Client-1**
 
 ```
-ip address 172.16.0.2/24
-ip route 0.0.0.0 0.0.0.0 172.16.0.1
+ip address 172.16.0.2/24 172.16.0.1
 ```
 
 **Client-2**
 
 ```
-ip address 172.16.1.2/24
-ip route 0.0.0.0 0.0.0.0 172.16.1.1
+ip address 172.16.1.2/24 172.16.1.1
 ```
 
 **Client-3**
 
 ```
-ip address 172.16.2.2/24
-ip route 0.0.0.0 0.0.0.0 172.16.2.1
+ip address 172.16.2.2/24 172.16.2.1
 ```
 
 **Client-4**
 
 ```
-ip address 172.16.3.2/24
-ip route 0.0.0.0 0.0.0.0 172.16.3.1
+ip address 172.16.3.2/24 172.16.3.1
 ```

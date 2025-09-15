@@ -279,15 +279,15 @@ Leaf-3(config-router-bgp-af)#end
 
 **Leaf-1 to Spine-1**
 
-![EVPN_full-1.png](EVPN_full-1.png)
+![EVPN_L3_full-1.png](EVPN_full-1.png)
 
 **Leaf-2 to Spine-1**
 
-![EVPN_full-2.png](EVPN_full-2.png)
+![EVPN_L3_full-2.png](EVPN_full-2.png)
 
 **Leaf-3 to Spine-1**
 
-![EVPN_full-3.png](EVPN_full-3.png)
+![EVPN_L3_full-3.png](EVPN_full-3.png)
 
 Смотрим таблицу соседства и что у нас по роутам
 
@@ -498,8 +498,9 @@ CLI
 
 Dump
 
-![EVPN_full-1-1.png](EVPN_full-1-1.png)
-![EVPN_full-1-2.png](EVPN_full-1-2.png)
+![EVPN_L3_full-1-1.png](EVPN_full-1-1.png)
+
+![EVPN_L3_full-1-2.png](EVPN_full-1-2.png)
 
 CLI
 
@@ -509,8 +510,9 @@ CLI
 
 Dump
 
-![EVPN_full-2-1.png](EVPN_full-2-1.png)
-![EVPN_full-2-2.png](EVPN_full-2-2.png)
+![EVPN_L3_full-2-1.png](EVPN_full-2-1.png)
+
+![EVPN_L3_full-2-2.png](EVPN_full-2-2.png)
 
 CLI
 
@@ -520,8 +522,9 @@ CLI
 
 Dump
 
-![EVPN_full-3-1.png](EVPN_full-3-1.png)
-![EVPN_full-3-2.png](EVPN_full-3-2.png)
+![EVPN_L3_full-3-1.png](EVPN_full-3-1.png)
+
+![EVPN_L3_full-3-2.png](EVPN_full-3-2.png)
 
 CLI
 

@@ -7,14 +7,14 @@
 **Описание/Пошаговая инструкция выполнения домашнего задания:**
 В этой самостоятельной работе мы ожидаем, что вы самостоятельно:
 
-1. Настроите BGP peering между Leaf и Spine в AF l2vpn evpn
-2. Настроите связанность между клиентами в первой зоне и убедитесь в её наличии
+1. Настроите каждого клиента в своем VNI
+2. Настроите маршрутизацию между клиентами.
 3. Зафиксируете в документации - план работы, адресное пространство, схему сети, конфигурацию устройств
 
 # Выполнение Задания
 
-Настраиваем на базе Underlay ISIS.
-Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab05_Overlay_EVPN_L2/OSPF_full_conf.md)
+Настраиваем на базе Underlay OSPF.
+Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L2/OSPF_full_conf.md)
 Работоспособность подтверждена [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_OSPF/README.md)
 
 ## Новая схема сети(Все та же)

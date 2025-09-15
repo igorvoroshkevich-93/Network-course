@@ -1,5 +1,3 @@
-<img width="1263" height="708" alt="image" src="https://github.com/user-attachments/assets/85f95ee3-b2b9-4c38-a0e5-fdacabb57435" />
-
 # Домашнее задание 6 Overlay. eBGP-OSPF
 
 ## Цель: Настроить eBGP-OSPF для Overlay сети.

@@ -293,19 +293,19 @@ Leaf-3(config-router-bgp-af)#end
 
 **Leaf-1**
 
-![EVPN_L3_leaf-1-1.png](EVPN_L3_leaf-1.png)
+![EVPN_L3_leaf-1-1.png](EVPN_L3_leaf-1-1.png)
 
 **Leaf-2**
 
-![EVPN_L3_leaf-2-1.png](EVPN_L3_leaf-2.png)
+![EVPN_L3_leaf-2-1.png](EVPN_L3_leaf-2-1.png)
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-1.png](EVPN_L3_leaf-3.png)
+![EVPN_L3_leaf-3-1.png](EVPN_L3_leaf-3-1.png)
 
 **Spine-1**
 
-![EVPN_L3_spine-1-1.png](EVPN_L3_spine-1.png)
+![EVPN_L3_spine-1-1.png](EVPN_L3_spine-1-1.png)
 
 ***Cоседство установилось, но роутов нет, проливаем Spine-2***
 
@@ -353,7 +353,7 @@ Spine-2(config-router-bgp-af)#end
 
 Ну и смотрим как тут дела
 
-![EVPN_L3_spine-2-1.png](EVPN_spine-2.png)
+![EVPN_L3_spine-2-1.png](EVPN_spine-2-1.png)
 
 ***Создаем Vxlan, поднимаем VRF смотрим роуты и состедство***
 

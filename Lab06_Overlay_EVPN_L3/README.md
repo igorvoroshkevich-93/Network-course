@@ -353,7 +353,7 @@ Spine-2(config-router-bgp-af)#end
 
 Ну и смотрим как тут дела
 
-![EVPN_L3_spine-2-1.png](EVPN_spine-2-1.png)
+![EVPN_L3_spine-2-1.png](EVPN_L3_spine-2-1.png)
 
 ***Создаем Vxlan, поднимаем VRF смотрим роуты и состедство***
 

@@ -163,6 +163,7 @@ N - номер клиентского домена
 ## Конфигурация VxLAN EVPN для L3 связанности
 
 Вот тут начинается самое интересное.
+BFD в этот раз не используем, разваливается вся лаба, надо таймеры задирать, крутил вплоть до 1000 ms - все равно рассыпалась, пусть будет только на Underlay
 
 ### Прольем сначала конфиг на Spine-1
 
@@ -193,8 +194,6 @@ Spine-1(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
 Spine-1(config-router-bgp)#   neighbor EVPN_Overlay route-reflector-client
 Spine-1(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
 Spine-1(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
-Spine-1(config-router-bgp)#   neighbor EVPN_Overlay bfd
-Spine-1(config-router-bgp)#   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
 Spine-1(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
 Spine-1(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
 Spine-1(config-router-bgp)#   redistribute connected route-map Loopback
@@ -218,8 +217,6 @@ Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
 Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
 Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
 Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
-Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay bfd
-Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
 Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
 Leaf-1(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
 Leaf-1(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
@@ -242,8 +239,6 @@ Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
 Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
 Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
 Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
-Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay bfd
-Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
 Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
 Leaf-2(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
 Leaf-2(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
@@ -266,8 +261,6 @@ Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
 Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
 Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
 Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
-Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay bfd
-Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
 Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
 Leaf-3(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
 Leaf-3(config-router-bgp)#   neighbor 10.1.0.0 peer group EVPN_Overlay
@@ -300,19 +293,19 @@ Leaf-3(config-router-bgp-af)#end
 
 **Leaf-1**
 
-![EVPN_leaf-1-1.png](EVPN_leaf-1.png)
+![EVPN_L3_leaf-1-1.png](EVPN_leaf-1.png)
 
 **Leaf-2**
 
-![EVPN_leaf-2-1.png](EVPN_leaf-2.png)
+![EVPN_L3_leaf-2-1.png](EVPN_leaf-2.png)
 
 **Leaf-3**
 
-![EVPN_leaf-3-1.png](EVPN_leaf-3.png)
+![EVPN_L3_leaf-3-1.png](EVPN_leaf-3.png)
 
 **Spine-1**
 
-![EVPN_spine-1-1.png](EVPN_spine-1.png)
+![EVPN_L3_spine-1-1.png](EVPN_spine-1.png)
 
 ***Cоседство установилось, но роутов нет, проливаем Spine-2***
 
@@ -346,8 +339,6 @@ Spine-2(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback1
 Spine-2(config-router-bgp)#   neighbor EVPN_Overlay route-reflector-client
 Spine-2(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
 Spine-2(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
-Spine-2(config-router-bgp)#   neighbor EVPN_Overlay bfd
-Spine-2(config-router-bgp)#   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
 Spine-2(config-router-bgp)#   neighbor EVPN_Overlay timers 3 9
 Spine-2(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
 Spine-2(config-router-bgp)#   redistribute connected route-map Loopback
@@ -362,7 +353,7 @@ Spine-2(config-router-bgp-af)#end
 
 Ну и смотрим как тут дела
 
-![EVPN_spine-2-1.png](EVPN_spine-2.png)
+![EVPN_L3_spine-2-1.png](EVPN_spine-2.png)
 
 ***Создаем Vxlan, поднимаем VRF смотрим роуты и состедство***
 
@@ -495,13 +486,13 @@ Leaf-3(config-router-bgp-vrf-Otus_Symmetric_L3)#end
 
 CLI
 
-![EVPN_spine-1-2.png](EVPN_spine-1-2.png)
+![EVPN_L3_spine-1-2.png](EVPN_spine-1-2.png)
 
 **Spine-2**
 
 CLI
 
-![EVPN_spine-2-2.png](EVPN_spine-2-2.png)
+![EVPN_L3_spine-2-2.png](EVPN_spine-2-2.png)
 
 **Leaf-1**
 
@@ -512,7 +503,7 @@ Dump
 
 CLI
 
-![EVPN_leaf-1-2.png](EVPN_leaf-1-2.png)
+![EVPN_L3_leaf-1-2.png](EVPN_leaf-1-2.png)
 
 **Leaf-2**
 
@@ -523,7 +514,7 @@ Dump
 
 CLI
 
-![EVPN_leaf-2-2.png](EVPN_leaf-2-2.png)
+![EVPN_L3_leaf-2-2.png](EVPN_leaf-2-2.png)
 
 **Leaf-3**
 
@@ -534,7 +525,7 @@ Dump
 
 CLI
 
-![EVPN_leaf-3-2.png](EVPN_leaf-3-2.png)
+![EVPN_L3_leaf-3-2.png](EVPN_leaf-3-2.png)
 
 
 ### Поднимаем конфигурацию на клиентах, проверяем связность.
@@ -545,41 +536,47 @@ CLI
 
 *Ping*
 
-![EVPN_client-1_ping.png](EVPN_client-1_ping.png)
+![EVPN_client-1_L3_ping.png](EVPN_client-1_L3_ping.png)
 
 *Dump*
 
-![EVPN_client-1_dump.png](EVPN_client-1_dump.png)
+![EVPN_client-1_L3-1_dump.png](EVPN_client-1_L3-1_dump.png)
+
+**Неожиданно отработал ecmp в лабе**
+
+![EVPN_client-1_L3-2_dump.png](EVPN_client-1_L3-2_dump.png)
 
 **Client-2 PING+DUMP**
 
 *Ping*
 
-![EVPN_client-2_ping.png](EVPN_client-2_ping.png)
+![EVPN_client-2_L3_ping.png](EVPN_client-2_L3_ping.png)
 
 *Dump*
 
-![EVPN_client-2_dump.png](EVPN_client-2_dump.png)
+![EVPN_client-2_L3-1_dump.png](EVPN_client-2_L3-1_dump.png)
 
 **Client-3 PING+DUMP**
 
+***Тут начинается интересная вещь, в дампе нет пингов между 3 и 4 клиентами, просто потому, что они на одном лифе, ловить нужно в другом месте, но мы уже убедились, что по фабрике связность есть выше***
+
 *Ping*
 
-![EVPN_client-3_ping.png](EVPN_client-3_ping.png)
+![EVPN_client-3_L3_ping.png](EVPN_client-3_L3_ping.png)
 
 *Dump*
 
-![EVPN_client-3_dump.png](EVPN_client-3_dump.png)
+![EVPN_client-3_L3-1_dump.png](EVPN_client-3_L3-1_dump.png)
 
 **Client-4 PING+DUMP**
 
 *Ping*
 
-![EVPN_client-4_ping.png](EVPN_client-4_ping.png)
+![EVPN_client-4_L3_ping.png](EVPN_client-4_L3_ping.png)
 
 *Dump*
 
-![EVPN_client-4_dump.png](EVPN_client-4_dump.png)
+![EVPN_client-4_L3-1_dump.png](EVPN_client-4_L3-1_dump.png)
 
 ### Все работает, связность есть
 
@@ -587,22 +584,22 @@ CLI
 
 **Spine-1**
 
-![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+![EVPN_L3_spine-1-3.png](EVPN_spine-1-3.png)
 
 **Spine-2**
 
-![EVPN_spine-1-3.png](EVPN_spine-1-3.png)
+![EVPN_L3_spine-1-3.png](EVPN_spine-1-3.png)
 
 **Leaf-1**
 
-![EVPN_leaf-1-3.png](EVPN_leaf-1-3.png)
+![EVPN_L3_leaf-1-3.png](EVPN_leaf-1-3.png)
 
 **Leaf-2**
 
-![EVPN_leaf-2-3.png](EVPN_leaf-2-3.png)
+![EVPN_L3_leaf-2-3.png](EVPN_leaf-2-3.png)
 
 **Leaf-3**
 
-![EVPN_leaf-3-3.png](EVPN_leaf-3-3.png)
+![EVPN_L3_leaf-3-3.png](EVPN_leaf-3-3.png)
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L3/EVPN_L3_full_conf.md)

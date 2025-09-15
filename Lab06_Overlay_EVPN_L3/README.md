@@ -12,7 +12,7 @@
 # Выполнение Задания
 
 Настраиваем на базе Underlay OSPF.
-Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L3/OSPF_full_conf.md)
+Конфигурация [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L3/Ospf_full_conf.md)
 Работоспособность подтверждена [тут](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab02_Underlay_OSPF/README.md)
 
 ## Новая схема сети(Все та же)

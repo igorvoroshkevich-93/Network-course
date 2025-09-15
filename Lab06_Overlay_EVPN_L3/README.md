@@ -279,33 +279,33 @@ Leaf-3(config-router-bgp-af)#end
 
 **Leaf-1 to Spine-1**
 
-![EVPN_L3_full-1.png](EVPN_full-1.png)
+![EVPN_L3_full-1.png](EVPN_L3_full-1.png)
 
 **Leaf-2 to Spine-1**
 
-![EVPN_L3_full-2.png](EVPN_full-2.png)
+![EVPN_L3_full-2.png](EVPN_L3_full-2.png)
 
 **Leaf-3 to Spine-1**
 
-![EVPN_L3_full-3.png](EVPN_full-3.png)
+![EVPN_L3_full-3.png](EVPN_L3_full-3.png)
 
 Смотрим таблицу соседства и что у нас по роутам
 
 **Leaf-1**
 
-![EVPN_L3_leaf-1-1.png](EVPN_leaf-1.png)
+![EVPN_L3_leaf-1-1.png](EVPN_L3_leaf-1.png)
 
 **Leaf-2**
 
-![EVPN_L3_leaf-2-1.png](EVPN_leaf-2.png)
+![EVPN_L3_leaf-2-1.png](EVPN_L3_leaf-2.png)
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-1.png](EVPN_leaf-3.png)
+![EVPN_L3_leaf-3-1.png](EVPN_L3_leaf-3.png)
 
 **Spine-1**
 
-![EVPN_L3_spine-1-1.png](EVPN_spine-1.png)
+![EVPN_L3_spine-1-1.png](EVPN_L3_spine-1.png)
 
 ***Cоседство установилось, но роутов нет, проливаем Spine-2***
 
@@ -486,49 +486,49 @@ Leaf-3(config-router-bgp-vrf-Otus_Symmetric_L3)#end
 
 CLI
 
-![EVPN_L3_spine-1-2.png](EVPN_spine-1-2.png)
+![EVPN_L3_spine-1-2.png](EVPN_L3_spine-1-2.png)
 
 **Spine-2**
 
 CLI
 
-![EVPN_L3_spine-2-2.png](EVPN_spine-2-2.png)
+![EVPN_L3_spine-2-2.png](EVPN_L3_spine-2-2.png)
 
 **Leaf-1**
 
 Dump
 
-![EVPN_L3_full-1-1.png](EVPN_full-1-1.png)
+![EVPN_L3_full-1-1.png](EVPN_L3_full-1-1.png)
 
-![EVPN_L3_full-1-2.png](EVPN_full-1-2.png)
+![EVPN_L3_full-1-2.png](EVPN_L3_full-1-2.png)
 
 CLI
 
-![EVPN_L3_leaf-1-2.png](EVPN_leaf-1-2.png)
+![EVPN_L3_leaf-1-2.png](EVPN_L3_leaf-1-2.png)
 
 **Leaf-2**
 
 Dump
 
-![EVPN_L3_full-2-1.png](EVPN_full-2-1.png)
+![EVPN_L3_full-2-1.png](EVPN_L3_full-2-1.png)
 
-![EVPN_L3_full-2-2.png](EVPN_full-2-2.png)
+![EVPN_L3_full-2-2.png](EVPN_L3_full-2-2.png)
 
 CLI
 
-![EVPN_L3_leaf-2-2.png](EVPN_leaf-2-2.png)
+![EVPN_L3_leaf-2-2.png](EVPN_L3_leaf-2-2.png)
 
 **Leaf-3**
 
 Dump
 
-![EVPN_L3_full-3-1.png](EVPN_full-3-1.png)
+![EVPN_L3_full-3-1.png](EVPN_L3_full-3-1.png)
 
-![EVPN_L3_full-3-2.png](EVPN_full-3-2.png)
+![EVPN_L3_full-3-2.png](EVPN_L3_full-3-2.png)
 
 CLI
 
-![EVPN_L3_leaf-3-2.png](EVPN_leaf-3-2.png)
+![EVPN_L3_leaf-3-2.png](EVPN_L3_leaf-3-2.png)
 
 
 ### Поднимаем конфигурацию на клиентах, проверяем связность.
@@ -539,7 +539,7 @@ CLI
 
 *Ping*
 
-![EVPN_client-1_L3_ping.png](EVPN_client-1_L3_ping.png)
+![EVPN_client_1_L3_ping.png](EVPN_client_1_L3_ping.png)
 
 *Dump*
 
@@ -553,7 +553,7 @@ CLI
 
 *Ping*
 
-![EVPN_client-2_L3_ping.png](EVPN_client-2_L3_ping.png)
+![EVPN_client_2_L3_ping.png](EVPN_client_2_L3_ping.png)
 
 *Dump*
 
@@ -565,7 +565,7 @@ CLI
 
 *Ping*
 
-![EVPN_client-3_L3_ping.png](EVPN_client-3_L3_ping.png)
+![EVPN_client_3_L3_ping.png](EVPN_client_3_L3_ping.png)
 
 *Dump*
 
@@ -575,7 +575,7 @@ CLI
 
 *Ping*
 
-![EVPN_client-4_L3_ping.png](EVPN_client-4_L3_ping.png)
+![EVPN_client_4_L3_ping.png](EVPN_client_4_L3_ping.png)
 
 *Dump*
 
@@ -587,22 +587,22 @@ CLI
 
 **Spine-1**
 
-![EVPN_L3_spine-1-3.png](EVPN_spine-1-3.png)
+![EVPN_L3_spine-1-3.png](EVPN_L3_spine-1-3.png)
 
 **Spine-2**
 
-![EVPN_L3_spine-1-3.png](EVPN_spine-1-3.png)
+![EVPN_L3_spine-1-3.png](EVPN_L3_spine-1-3.png)
 
 **Leaf-1**
 
-![EVPN_L3_leaf-1-3.png](EVPN_leaf-1-3.png)
+![EVPN_L3_leaf-1-3.png](EVPN_L3_leaf-1-3.png)
 
 **Leaf-2**
 
-![EVPN_L3_leaf-2-3.png](EVPN_leaf-2-3.png)
+![EVPN_L3_leaf-2-3.png](EVPN_L3_leaf-2-3.png)
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-3.png](EVPN_leaf-3-3.png)
+![EVPN_L3_leaf-3-3.png](EVPN_L3_leaf-3-3.png)
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab06_Overlay_EVPN_L3/EVPN_L3_full_conf.md)

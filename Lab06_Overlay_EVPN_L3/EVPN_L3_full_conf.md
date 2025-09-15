@@ -32,9 +32,7 @@ router bgp 65100
    neighbor EVPN_Overlay route-reflector-client
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd 
-   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
-   neighbor EVPN_Overlay timers 3 9
+   neighbor EVPN_Overlay timers 30 90
    neighbor EVPN_Overlay password Otus_Overlay
    redistribute connected route-map Loopback
    !
@@ -79,9 +77,7 @@ router bgp 65100
    neighbor EVPN_Overlay route-reflector-client
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd 
-   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
-   neighbor EVPN_Overlay timers 3 9
+   neighbor EVPN_Overlay timers 30 90
    neighbor EVPN_Overlay password Otus_Overlay
    redistribute connected route-map Loopback
    !
@@ -123,9 +119,7 @@ router bgp 65101
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd 
-   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
-   neighbor EVPN_Overlay timers 3 9
+   neighbor EVPN_Overlay timers 30 90
    neighbor EVPN_Overlay password Otus_Overlay
    neighbor 10.1.0.0 peer group EVPN_Overlay
    neighbor 10.1.0.1 peer group EVPN_Overlay
@@ -142,7 +136,6 @@ router bgp 65101
       rd 10.1.0.32:10999
       route-target import evpn 65100:10999
       route-target export evpn 65100:10999
-      redistribute learned
       redistribute connected
 
 
@@ -170,7 +163,7 @@ ip routing vrf Otus_Symmetric_L3
 !
 int vlan 904
    vrf Otus_Symmetric_L3
-   ip virtual address 172.16.1.1/24
+   ip address virtual 172.16.1.1/24
 !
 Interface Ethernet7
    switchport mode access
@@ -185,9 +178,7 @@ router bgp 65102
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd 
-   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
-   neighbor EVPN_Overlay timers 3 9
+   neighbor EVPN_Overlay timers 30 90
    neighbor EVPN_Overlay password Otus_Overlay
    neighbor 10.1.0.0 peer group EVPN_Overlay
    neighbor 10.1.0.1 peer group EVPN_Overlay
@@ -198,13 +189,12 @@ router bgp 65102
    !
    vlan 904
       rd 10.1.0.33:10904
-      route-target both evpn 65100:10904
+      route-target both 65100:10904
       redistribute learned
    vrf Otus_Symmetric_L3
       rd 10.1.0.33:10999
       route-target import evpn 65100:10999
       route-target export evpn 65100:10999
-      redistribute learned
       redistribute connected
 
 
@@ -213,7 +203,7 @@ int vxlan1
   vxlan source-int lo1
   vxlan udp-port 4789
   vxlan learn-restrict any
-  vxlan vlan 904 vni 109040
+  vxlan vlan 904 vni 10904
   vxlan vrf Otus_Symmetric_L3 vni 10999
 !
 ```
@@ -223,10 +213,10 @@ int vxlan1
 ```
 service routing protocols model multi-agent
 !
-vlan 903
+vlan 905
    name Clients_905
 !
-vlan 904
+vlan 906
    name Clients_906
 !
 vrf instance Otus_Symmetric_L3
@@ -235,11 +225,11 @@ ip routing vrf Otus_Symmetric_L3
 !
 int vlan 905
    vrf Otus_Symmetric_L3
-   ip virtual address 172.16.2.1/24
+   ip address virtual 172.16.2.1/24
 !
 int vlan 906
    vrf Otus_Symmetric_L3
-   ip virtual address 172.16.3.1/24
+   ip address virtual 172.16.3.1/24
 !
 Interface Ethernet7
    switchport mode access
@@ -258,12 +248,10 @@ router bgp 65103
    neighbor EVPN_Overlay update-source Loopback1
    neighbor EVPN_Overlay send-community extended
    neighbor EVPN_Overlay ebgp-multihop 10
-   neighbor EVPN_Overlay bfd 
-   neighbor EVPN_Overlay bfd interval 300 min-rx 300 multiplier 3
    neighbor EVPN_Overlay timers 3 9
    neighbor EVPN_Overlay password Otus_Overlay
-   neighbor 10.0.0.0 peer group EVPN_Overlay
-   neighbor 10.0.0.1 peer group EVPN_Overlay
+   neighbor 10.1.0.0 peer group EVPN_Overlay
+   neighbor 10.1.0.1 peer group EVPN_Overlay
    redistribute connected route-map Loopback
    !
    address-family evpn
@@ -271,17 +259,16 @@ router bgp 65103
    !
    vlan 905
       rd 10.1.0.34:10905
-      route-target both evpn 65100:10905
+      route-target both 65100:10905
       redistribute learned
    vlan 906
       rd 10.1.0.34:10906
-      route-target both evpn 65100:10906
+      route-target both 65100:10906
       redistribute learned
    vrf Otus_Symmetric_L3
       rd 10.1.0.34:10999
       route-target import evpn 65100:10999
       route-target export evpn 65100:10999
-      redistribute learned
       redistribute connected
 
 
@@ -300,23 +287,23 @@ int vxlan1
 **Client-1**
 
 ```
-ip address 172.16.0.2/24 172.16.0.1
+ip 172.16.0.2/24 172.16.0.1
 ```
 
 **Client-2**
 
 ```
-ip address 172.16.1.2/24 172.16.1.1
+ip 172.16.1.2/24 172.16.1.1
 ```
 
 **Client-3**
 
 ```
-ip address 172.16.2.2/24 172.16.2.1
+ip 172.16.2.2/24 172.16.2.1
 ```
 
 **Client-4**
 
 ```
-ip address 172.16.3.2/24 172.16.3.1
+ip 172.16.3.2/24 172.16.3.1
 ```

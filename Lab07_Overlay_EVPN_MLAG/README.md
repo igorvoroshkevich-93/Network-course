@@ -871,11 +871,11 @@ CLI
 
 Ждем, пока MLAG соберется обратно
 
-![EVPN_MLAG_leaf-2-4.png](EVPN_MLAG_leaf-1-4.png)
+![EVPN_MLAG_leaf-2-4.png](EVPN_MLAG_leaf-2-4.png)
 
 собрался
 
-![EVPN_MLAG_leaf-2-5.png](EVPN_MLAG_leaf-1-4.png)
+![EVPN_MLAG_leaf-2-5.png](EVPN_MLAG_leaf-2-5.png)
 
 Ну и давайте посмотрим, что происходит в Peer-Link и Keepalive при падении MLAG
 

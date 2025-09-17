@@ -836,6 +836,10 @@ CLI
 
 ![EVPN_client-1_MLAG-1_dump.png](EVPN_client-1_MLAG-1_dump.png)
 
+Так же загляем в дамп на выходе с лифа, чтобы увидеть заголовки VxLAN
+
+![EVPN_client-1_MLAG-Vx_dump.png](EVPN_client-1_MLAG-Vx_dump.png)
+
 
 **Client-2 PING+DUMP**
 
@@ -846,6 +850,11 @@ CLI
 *Dump*
 
 ![EVPN_client-2_MLAG-1_dump.png](EVPN_client-2_MLAG-1_dump.png)
+
+Так же загляем в дамп на выходе с лифа, чтобы увидеть заголовки VxLAN
+
+![EVPN_client-2_MLAG-Vx_dump.png](EVPN_client-2_MLAG-Vx_dump.png)
+
 
 ### Запускаем бесконечный пинг от Server-2 к Server-1 и складываем Leaf-1
 
@@ -910,6 +919,13 @@ CLI
 причем вылетело все через Peer-link
 
 ![EVPN_client_2-8_MLAG_ping.png](EVPN_client_2-8_MLAG_ping.png)
+
+Посмотрим в заголовки
+
+![EVPN_client-1-2_MLAG-Vx-1_dump.png](EVPN_client-1-2_MLAG-Vx-1_dump.png)
+
+![EVPN_client-1-2_MLAG-Vx-2_dump.png](EVPN_client-1-2_MLAG-Vx-2_dump.png)
+
 
 а все потому что
 

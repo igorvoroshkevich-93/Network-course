@@ -959,3 +959,154 @@ CLI
 ![EVPN_MLAG_leaf-4-3.png](EVPN_MLAG_leaf-4-3.png)
 
 Конфигурация [общим файлом](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/EVPN_MLAG_full_conf.md)
+
+
+## Дополнение - Настройка и проверка ESI
+
+Слегка изменилась схема, покажем
+
+![ESI_EVE.png](ESI_EVE.png)
+
+### Добавляем два новых лифа и сервер, который выступит клиентом
+
+*Отключим Leaf3-4 чтобы лаба не зависала сильно*
+
+#### ESI Config + Portchannel
+
+**Leaf-5**
+
+```
+```
+
+**Leaf-6**
+
+```
+```
+
+**Client-3**
+
+```
+```
+
+Проверяем собрался ли Port-Channel
+
+**Leaf-5**
+
+![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+
+**Leaf-6**
+
+![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+
+**Client-3**
+
+![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+
+
+Конфигурацию OSPF опустим, будет в файле общем конфигурации, заводим сразу EVPN+VxLan
+
+#### EVPN + Vxlan
+
+**Leaf-5**
+
+```
+```
+
+**Leaf-6**
+
+```
+```
+
+**Leaf-5**
+
+Смотрим соседство, маршруты разных типов, состояние Portchannel(ESI, DF, etc.)
+
+Dump
+
+![EVPN_MLAG_full-5-1.png](EVPN_MLAG_full-5-1.png)
+
+![EVPN_MLAG_full-5-2.png](EVPN_MLAG_full-5-2.png)
+
+CLI
+
+![EVPN_ESI_leaf-5-2.png](EVPN_ESI_leaf-5-2.png)
+
+**Leaf-6**
+
+Dump
+
+![EVPN_MLAG_full-6-1.png](EVPN_MLAG_full-6-1.png)
+
+![EVPN_MLAG_full-6-2.png](EVPN_MLAG_full-6-2.png)
+
+CLI
+
+![EVPN_ESI_leaf-6-2.png](EVPN_ESI_leaf-6-2.png)
+
+#### Тестируем связность
+
+**Client-3 PING+DUMP**
+
+*Ping*
+
+![EVPN_client_3_ESI_ping.png](EVPN_client_3_ESI_ping.png)
+
+*Dump*
+
+![EVPN_client-3_ESI_dump.png](EVPN_client-3_ESI__dump.png)
+
+Так же загляем в дамп на выходе с лифа, чтобы увидеть заголовки VxLAN
+
+![EVPN_client-3_ESI-Vx_dump.png](EVPN_client-3_ESI-Vx_dump.png)
+
+#### Проверяем отказоустойчивость
+
+Запускаем бесконечный пинг от Server-3 к Server-1 и складываем Leaf-?
+
+По скрину видно, что трафик перетек с Leaf-1 на Leaf-2
+
+![EVPN_client_3-2_ESI_ping.png](EVPN_client_3-2_ESI_ping.png)
+
+![EVPN_client_3-3_ESI_ping.png](EVPN_client_3-3_ESI_ping.png)
+
+И смотрим в дампы, чтобы увидеть Windraw-анонс, который сложил маршруты к активному Leaf
+
+![EVPN_client-3-2_ESI_dump.png](EVPN_client-3-2_ESI__dump.png)
+
+Ждем пока поднимется, смотрим как снова сойдется PortChannel и появится маршрут в анонсах 
+
+![EVPN_ESI_leaf-5-4.png](EVPN_ESI_leaf-5-4.png)
+
+#### Скрины соседства, роутов, VxLan и MLAG/ESI-LAG(на Leaf)
+
+**Spine-1**
+
+![EVPN_MLAG_spine-1-3.png](EVPN_MLAG_spine-1-3.png)
+
+**Spine-2**
+
+![EVPN_MLAG_spine-2-3.png](EVPN_MLAG_spine-2-3.png)
+
+**Leaf-1**
+
+![EVPN_MLAG_leaf-1-3.png](EVPN_MLAG_leaf-1-3.png)
+
+**Leaf-2**
+
+![EVPN_MLAG_leaf-2-3.png](EVPN_MLAG_leaf-2-3.png)
+
+**Leaf-5**
+
+![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-3.png)
+
+**Leaf-6**
+
+![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-3.png)
+
+Конфигурация [ESI-LAG](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/ESI_LAG_full_conf.md)
+
+Конфигурация [MLAG](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/Peer-link_MLAG_full_conf.md)
+
+Конфигурация [OSPF](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/OSPF_MLAG_full_conf.md)
+
+Конфигурация [EVPN+VxLan](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/EVPN_MLAG_full_conf.md)

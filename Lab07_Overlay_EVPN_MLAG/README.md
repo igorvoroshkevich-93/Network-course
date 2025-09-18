@@ -1073,27 +1073,7 @@ CLI
 
 ![EVPN_client-3-2_ESI_dump.png](EVPN_client-3-2_ESI__dump.png)
 
-Ждем пока поднимется, смотрим как снова сойдется PortChannel и появится маршрут в анонсах 
-
-![EVPN_ESI_leaf-5-4.png](EVPN_ESI_leaf-5-4.png)
-
-#### Скрины соседства, роутов, VxLan и MLAG/ESI-LAG(на Leaf)
-
-**Spine-1**
-
-![EVPN_MLAG_spine-1-3.png](EVPN_MLAG_spine-1-3.png)
-
-**Spine-2**
-
-![EVPN_MLAG_spine-2-3.png](EVPN_MLAG_spine-2-3.png)
-
-**Leaf-1**
-
-![EVPN_MLAG_leaf-1-3.png](EVPN_MLAG_leaf-1-3.png)
-
-**Leaf-2**
-
-![EVPN_MLAG_leaf-2-3.png](EVPN_MLAG_leaf-2-3.png)
+Ждем пока поднимется, смотрим как снова сойдется PortChannel и появится маршрут в анонсах
 
 **Leaf-5**
 
@@ -1102,6 +1082,34 @@ CLI
 **Leaf-6**
 
 ![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-3.png)
+
+#### Скрины соседства, роутов, VxLan и MLAG/ESI-LAG(на Leaf)
+
+**Spine-1**
+
+![EVPN_MLAG_spine-1-4.png](EVPN_MLAG_spine-1-4.png)
+
+**Spine-2**
+
+![EVPN_MLAG_spine-2-4.png](EVPN_MLAG_spine-2-4.png)
+
+**Leaf-1**
+
+![EVPN_MLAG_leaf-1-4.png](EVPN_MLAG_leaf-1-4.png)
+
+**Leaf-2**
+
+![EVPN_MLAG_leaf-2-4.png](EVPN_MLAG_leaf-2-4.png)
+
+**Leaf-5**
+
+![EVPN_ESI_leaf-5-4.png](EVPN_ESI_leaf-5-4.png)
+
+**Leaf-6**
+
+![EVPN_ESI_leaf-6-4.png](EVPN_ESI_leaf-6-4.png)
+
+## Конфигурационныек файлы
 
 Конфигурация [ESI-LAG](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab07_Overlay_EVPN_MLAG/ESI_LAG_full_conf.md)
 

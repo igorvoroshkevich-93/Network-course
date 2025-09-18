@@ -1,4 +1,4 @@
-# Домашнее задание 6 Overlay. VXLAN. Multihoming
+# Домашнее задание 7 Overlay. VXLAN. Multihoming
 
 ## Цель: Настроить отказоустойчивое подключение клиентов с использованием EVPN Multihoming.
 
@@ -976,31 +976,145 @@ CLI
 **Leaf-5**
 
 ```
+localhost(config)#hostname Leaf-5
+Leaf-5(config)#link tracking group EVPN-ESI-MH
+Leaf-5(config-link-state-EVPN-ESI-MH)#   recovery delay 60
+Leaf-5(config-link-state-EVPN-ESI-MH)#!
+Leaf-5(config-link-state-EVPN-ESI-MH)#vlan 905
+Leaf-5(config-vlan-905)#   name Server-3
+Leaf-5(config-vlan-905)#vrf instance Otus_Symmetric_L3
+Leaf-5(config-vrf-Otus_Symmetric_L3)#!
+Leaf-5(config-vrf-Otus_Symmetric_L3)#interface Port-Channel20
+Leaf-5(config-if-Po20)#   switchport trunk allowed vlan 904
+Leaf-5(config-if-Po20)#   switchport mode trunk
+Leaf-5(config-if-Po20)#   !
+Leaf-5(config-if-Po20)#   evpn ethernet-segment
+Leaf-5(config-evpn-es)#      identifier 0000:0000:0905:0000:0056
+Leaf-5(config-evpn-es)#      route-target import 00:00:09:05:00:56
+Leaf-5(config-evpn-es)#      designated-forwarder election algorithm preference 120
+Leaf-5(config-evpn-es)#   lacp system-id 0000.0905.0056
+Leaf-5(config-if-Po20)#   link tracking group EVPN-ESI-MH downstream
+Leaf-5(config-if-Po20)#!
+Leaf-5(config-if-Po20)#interface Ethernet1
+Leaf-5(config-if-Et1)#   link tracking group EVPN-ESI-MH upstream
+Leaf-5(config-if-Et1)#!
+Leaf-5(config-if-Et1)#interface Ethernet2
+Leaf-5(config-if-Et2)#   link tracking group EVPN-ESI-MH upstream
+Leaf-5(config-if-Et2)#!
+Leaf-5(config-if-Et2)#interface Ethernet7
+Leaf-5(config-if-Et7)#   channel-group 20 mode active
+Leaf-5(config-if-Et7)#!
+Leaf-5(config-if-Et7)#interface Ethernet8
+Leaf-5(config-if-Et8)#!
+Leaf-5(config-if-Et8)#interface Management1
+Leaf-5(config-if-Ma1)#!
+Leaf-5(config-if-Ma1)#interface Vlan905
+Leaf-5(config-if-Vl905)#   vrf Otus_Symmetric_L3
+Leaf-5(config-if-Vl905)#   ip address 172.16.2.2/24
+Leaf-5(config-if-Vl905)#   ip virtual-router address 172.16.2.1
+Leaf-5(config-if-Vl905)#!
+Leaf-5(config-if-Vl905)#ip virtual-router mac-address c0:01:09:05:00:56
+Leaf-5(config)#!
+Leaf-5(config)#ip routing
+Leaf-5(config)#ip routing vrf Otus_Symmetric_L3
+Leaf-5(config)#!
+Leaf-5(config)#end
+
 ```
 
 **Leaf-6**
 
 ```
+localhost(config)#hostname Leaf-6
+Leaf-6(config)#!
+Leaf-6(config)#link tracking group EVPN-ESI-MH
+Leaf-6(config-link-state-EVPN-ESI-MH)#   recovery delay 60
+Leaf-6(config-link-state-EVPN-ESI-MH)#!
+Leaf-6(config-link-state-EVPN-ESI-MH)#vlan 905
+Leaf-6(config-vlan-905)#   name Server-3
+Leaf-6(config-vlan-905)#!
+Leaf-6(config-vlan-905)#vrf instance Otus_Symmetric_L3
+Leaf-6(config-vrf-Otus_Symmetric_L3)#!
+Leaf-6(config-vrf-Otus_Symmetric_L3)#interface Port-Channel20
+Leaf-6(config-if-Po20)#   switchport trunk allowed vlan 904
+Leaf-6(config-if-Po20)#   switchport mode trunk
+Leaf-6(config-if-Po20)#   !
+Leaf-6(config-if-Po20)#   evpn ethernet-segment
+Leaf-6(config-evpn-es)#      identifier 0000:0000:0905:0000:0056
+Leaf-6(config-evpn-es)#      route-target import 00:00:09:05:00:56
+Leaf-6(config-evpn-es)#      designated-forwarder election algorithm preference0
+Leaf-6(config-evpn-es)#   lacp system-id 0000.0905.0056
+Leaf-6(config-if-Po20)#   link tracking group EVPN-ESI-MH downstream
+Leaf-6(config-if-Po20)#!
+Leaf-6(config-if-Po20)#interface Ethernet1
+Leaf-6(config-if-Et1)#   link tracking group EVPN-ESI-MH upstream
+Leaf-6(config-if-Et1)#!
+Leaf-6(config-if-Et1)#interface Ethernet2
+Leaf-6(config-if-Et2)#   link tracking group EVPN-ESI-MH upstream
+Leaf-6(config-if-Et2)#!
+Leaf-6(config-if-Et2)#interface Ethernet7
+Leaf-6(config-if-Et7)#   channel-group 20 mode active
+Leaf-6(config-if-Et7)#!
+Leaf-6(config-if-Et7)#interface Ethernet8
+Leaf-6(config-if-Et8)#!
+Leaf-6(config-if-Et8)#interface Management1
+Leaf-6(config-if-Ma1)#!
+Leaf-6(config-if-Ma1)#interface Vlan905
+Leaf-6(config-if-Vl905)#   vrf Otus_Symmetric_L3
+Leaf-6(config-if-Vl905)#   ip address 172.16.2.3/24
+Leaf-6(config-if-Vl905)#   ip virtual-router address 172.16.2.1
+Leaf-6(config-if-Vl905)#!
+Leaf-6(config-if-Vl905)#ip virtual-router mac-address c0:01:09:05:00:56
+Leaf-6(config)#!
+Leaf-6(config)#ip routing
+Leaf-6(config)#ip routing vrf Otus_Symmetric_L3
+Leaf-6(config)#!
+Leaf-6(config)#end
+
 ```
 
 **Client-3**
 
 ```
+localhost(config)#hostname Server-3
+Server-3(config)#!
+Server-3(config)#vlan 905
+Server-3(config-vlan-905)#   name Clients-3_to_Leaf5-6
+Server-3(config-vlan-905)#!
+Server-3(config-vlan-905)#interface Port-Channel10
+Server-3(config-if-Po10)#   switchport trunk allowed vlan 905
+Server-3(config-if-Po10)#   switchport mode trunk
+Server-3(config-if-Po10)#!
+Server-3(config-if-Po10)#interface Ethernet1
+Server-3(config-if-Et1)#   channel-group 10 mode active
+Server-3(config-if-Et1)#!
+Server-3(config-if-Et1)#interface Ethernet2
+Server-3(config-if-Et2)#   channel-group 10 mode active
+Server-3(config-if-Et2)#!
+Server-3(config-if-Et2)#interface Vlan905
+Server-3(config-if-Vl905)#   ip address 172.16.2.20/24
+Server-3(config-if-Vl905)#   no shutdown
+Server-3(config-if-Vl905)#!
+Server-3(config-if-Vl905)#ip routing
+Server-3(config)#ip route 0.0.0.0 0.0.0.0 172.16.2.1
+Server-3(config)#!
+Server-3(config)#end
+
 ```
 
 Проверяем собрался ли Port-Channel
 
 **Leaf-5**
 
-![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+![EVPN_ESI_leaf-5-1.png](EVPN_ESI_leaf-5-1.png)
 
 **Leaf-6**
 
-![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+![EVPN_ESI_leaf-6-1.png](EVPN_ESI_leaf-6-1.png)
 
 **Client-3**
 
-![EVPN_ESI_spine-5-1.png](EVPN_ESI_spine-5-1.png)
+![EVPN_ESI_client-3-1.png](EVPN_ESI_client-3-1.png)
 
 
 Конфигурацию OSPF опустим, будет в файле общем конфигурации, заводим сразу EVPN+VxLan
@@ -1010,11 +1124,85 @@ CLI
 **Leaf-5**
 
 ```
+Leaf-5(config)#router bgp 65105
+Leaf-5(config-router-bgp)#   router-id 10.0.0.36
+Leaf-5(config-router-bgp)#   maximum-paths 4 ecmp 64
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback0
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay timers 30 90
+Leaf-5(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Leaf-5(config-router-bgp)#   neighbor 10.0.0.0 peer group EVPN_Overlay
+Leaf-5(config-router-bgp)#   neighbor 10.0.0.1 peer group EVPN_Overlay
+Leaf-5(config-router-bgp)#   redistribute connected route-map Loopback
+Leaf-5(config-router-bgp)#   !
+Leaf-5(config-router-bgp)#   address-family evpn
+Leaf-5(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+Leaf-5(config-router-bgp-af)#   !
+Leaf-5(config-router-bgp-af)#   vlan 905
+Leaf-5(config-macvrf-905)#      rd 10.1.0.36:10905
+Leaf-5(config-macvrf-905)#      route-target both 65105:10905
+Leaf-5(config-macvrf-905)#      redistribute learned
+Leaf-5(config-macvrf-905)#   vrf Otus_Symmetric_L3
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#      rd 10.1.0.36:10999
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#      route-target import evpn 65100:10999
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#      route-target export evpn 65100:10999
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#      redistribute connected
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#!
+Leaf-5(config-router-bgp-vrf-Otus_Symmetric_L3)#int vxlan1
+Leaf-5(config-if-Vx1)#  vxlan source-int lo1
+Leaf-5(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-5(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-5(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-5(config-if-Vx1)#  vxlan vrf Otus_Symmetric_L3 vni 10999
+Leaf-5(config-if-Vx1)#!
+Leaf-5(config-if-Vx1)#end
+
 ```
 
 **Leaf-6**
 
 ```
+Leaf-6(config)#router bgp 65106
+Leaf-6(config-router-bgp)#   router-id 10.0.0.37
+Leaf-6(config-router-bgp)#   maximum-paths 4 ecmp 64
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay peer group
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay remote-as 65100
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay update-source Loopback0
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay send-community extended
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay ebgp-multihop 10
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay timers 30 90
+Leaf-6(config-router-bgp)#   neighbor EVPN_Overlay password Otus_Overlay
+Leaf-6(config-router-bgp)#   neighbor 10.0.0.0 peer group EVPN_Overlay
+Leaf-6(config-router-bgp)#   neighbor 10.0.0.1 peer group EVPN_Overlay
+Leaf-6(config-router-bgp)#   redistribute connected route-map Loopback
+Leaf-6(config-router-bgp)#   !
+Leaf-6(config-router-bgp)#   address-family evpn
+Leaf-6(config-router-bgp-af)#      neighbor EVPN_Overlay activate
+Leaf-6(config-router-bgp-af)#   !
+Leaf-6(config-router-bgp-af)#   vlan 905
+Leaf-6(config-macvrf-905)#      rd 10.1.0.37:10905
+Leaf-6(config-macvrf-905)#      route-target both 65105:10905
+Leaf-6(config-macvrf-905)#      redistribute learned
+Leaf-6(config-macvrf-905)#   vrf Otus_Symmetric_L3
+Leaf-6(config-router-bgp-vrf-Otus_Symmetric_L3)#      rd 10.1.0.37:10999
+Leaf-6(config-router-bgp-vrf-Otus_Symmetric_L3)#      route-target import evpn 65100:10999
+Leaf-6(config-router-bgp-vrf-Otus_Symmetric_L3)#      route-target export evpn 65100:10999
+Leaf-6(config-router-bgp-vrf-Otus_Symmetric_L3)#      redistribute connected
+Leaf-6(config-router-bgp-vrf-Otus_Symmetric_L3)#
+Leaf-6(config-if-Vx1)#  vxlan source-int lo1
+Leaf-6(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-6(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-6(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-6(config-if-Vx1)#  vxlan vrf Otus_Symmetric_L3 vni 10999
+Leaf-6(config-if-Vx1)#!
+Leaf-6(config-if-Vx1)#end
+
+
 ```
 
 **Leaf-5**
@@ -1026,6 +1214,8 @@ Dump
 ![EVPN_MLAG_full-5-1.png](EVPN_MLAG_full-5-1.png)
 
 ![EVPN_MLAG_full-5-2.png](EVPN_MLAG_full-5-2.png)
+
+![EVPN_MLAG_full-5-3.png](EVPN_MLAG_full-5-3.png)
 
 CLI
 
@@ -1055,13 +1245,9 @@ CLI
 
 ![EVPN_client-3_ESI_dump.png](EVPN_client-3_ESI__dump.png)
 
-Так же загляем в дамп на выходе с лифа, чтобы увидеть заголовки VxLAN
-
-![EVPN_client-3_ESI-Vx_dump.png](EVPN_client-3_ESI-Vx_dump.png)
-
 #### Проверяем отказоустойчивость
 
-Запускаем бесконечный пинг от Server-3 к Server-1 и складываем Leaf-?
+Запускаем бесконечный пинг от Server-1 к Server-3 и складываем Leaf-5
 
 По скрину видно, что трафик перетек с Leaf-1 на Leaf-2
 

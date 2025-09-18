@@ -1276,19 +1276,19 @@ CLI
 
 **Leaf-1**
 
-![EVPN_MLAG_leaf-1-5.png](EVPN_MLAG_leaf-1-4.png)
+![EVPN_MLAG_leaf-1-5.png](EVPN_MLAG_leaf-1-5.png)
 
 **Leaf-2**
 
-![EVPN_MLAG_leaf-2-6.png](EVPN_MLAG_leaf-2-4.png)
+![EVPN_MLAG_leaf-2-6.png](EVPN_MLAG_leaf-2-6.png)
 
 **Leaf-5**
 
-![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-4.png)
+![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-3.png)
 
 **Leaf-6**
 
-![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-4.png)
+![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-3.png)
 
 ## Конфигурационныек файлы
 

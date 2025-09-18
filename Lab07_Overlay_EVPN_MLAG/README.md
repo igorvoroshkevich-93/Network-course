@@ -1284,11 +1284,11 @@ CLI
 
 **Leaf-5**
 
-![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-3.png)
+![EVPN_MLAG_leaf-5-3.png](EVPN_MLAG_leaf-5-3.png)
 
 **Leaf-6**
 
-![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-3.png)
+![EVPN_MLAG_leaf-6-3.png](EVPN_MLAG_leaf-6-3.png)
 
 ## Конфигурационныек файлы
 

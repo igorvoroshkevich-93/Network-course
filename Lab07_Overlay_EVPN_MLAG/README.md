@@ -1243,7 +1243,7 @@ CLI
 
 *Dump*
 
-![EVPN_client-3_ESI_dump.png](EVPN_client-3_ESI__dump.png)
+![EVPN_client-3_ESI_dump.png](EVPN_client-3_ESI_dump.png)
 
 #### Проверяем отказоустойчивость
 
@@ -1253,14 +1253,13 @@ CLI
 
 ![EVPN_client_3-2_ESI_ping.png](EVPN_client_3-2_ESI_ping.png)
 
-
 И смотрим в дампы, чтобы увидеть Windraw-анонс, который сложил маршруты к активному Leaf
 
-![EVPN_client-3-2_ESI_dump.png](EVPN_client-3-2_ESI__dump.png)
+![EVPN_client-3-2_ESI_dump.png](EVPN_client-3-2_ESI_dump.png)
 
 Ждем пока поднимется, смотрим как снова сойдется PortChannel и появится маршрут в анонсах
 
-![EVPN_client-3-3_ESI_dump.png](EVPN_client-3-3_ESI__dump.png)
+![EVPN_client-3-3_ESI_dump.png](EVPN_client-3-3_ESI_dump.png)
 
 Пришел, смотрим конфигурацию
 

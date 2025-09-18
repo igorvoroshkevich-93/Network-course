@@ -1249,11 +1249,10 @@ CLI
 
 Запускаем бесконечный пинг от Server-1 к Server-3 и складываем Leaf-5
 
-По скрину видно, что трафик перетек с Leaf-1 на Leaf-2
+По скрину видно, что трафик сначала балансировался между Leaf 5 и 6 , перетек полностью на  Leaf-6
 
 ![EVPN_client_3-2_ESI_ping.png](EVPN_client_3-2_ESI_ping.png)
 
-![EVPN_client_3-3_ESI_ping.png](EVPN_client_3-3_ESI_ping.png)
 
 И смотрим в дампы, чтобы увидеть Windraw-анонс, который сложил маршруты к активному Leaf
 
@@ -1261,13 +1260,9 @@ CLI
 
 Ждем пока поднимется, смотрим как снова сойдется PortChannel и появится маршрут в анонсах
 
-**Leaf-5**
+![EVPN_client-3-3_ESI_dump.png](EVPN_client-3-3_ESI__dump.png)
 
-![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-3.png)
-
-**Leaf-6**
-
-![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-3.png)
+Пришел, смотрим конфигурацию
 
 #### Скрины соседства, роутов, VxLan и MLAG/ESI-LAG(на Leaf)
 
@@ -1281,19 +1276,19 @@ CLI
 
 **Leaf-1**
 
-![EVPN_MLAG_leaf-1-4.png](EVPN_MLAG_leaf-1-4.png)
+![EVPN_MLAG_leaf-1-5.png](EVPN_MLAG_leaf-1-4.png)
 
 **Leaf-2**
 
-![EVPN_MLAG_leaf-2-4.png](EVPN_MLAG_leaf-2-4.png)
+![EVPN_MLAG_leaf-2-6.png](EVPN_MLAG_leaf-2-4.png)
 
 **Leaf-5**
 
-![EVPN_ESI_leaf-5-4.png](EVPN_ESI_leaf-5-4.png)
+![EVPN_ESI_leaf-5-3.png](EVPN_ESI_leaf-5-4.png)
 
 **Leaf-6**
 
-![EVPN_ESI_leaf-6-4.png](EVPN_ESI_leaf-6-4.png)
+![EVPN_ESI_leaf-6-3.png](EVPN_ESI_leaf-6-4.png)
 
 ## Конфигурационныек файлы
 

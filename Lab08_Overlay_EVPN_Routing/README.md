@@ -221,7 +221,7 @@ Leaf-5(config)#router bgp 65105
 Leaf-5(config-router-bgp)#   !
 Leaf-5(config-router-bgp)#   vlan 905
 Leaf-5(config-macvrf-905)#      rd 10.1.0.36:10905
-Leaf-5(config-macvrf-905)#      route-target both 65105:10905
+Leaf-5(config-macvrf-905)#      route-target both 65100:10905
 Leaf-5(config-macvrf-905)#      redistribute learned
 Leaf-5(config-macvrf-905)#!
 Leaf-5(config-macvrf-905)#int vxlan1
@@ -240,7 +240,7 @@ Leaf-6(config)#router bgp 65106
 Leaf-6(config-router-bgp)#   !
 Leaf-6(config-router-bgp)#   vlan 905
 Leaf-6(config-macvrf-905)#      rd 10.1.0.37:10905
-Leaf-6(config-macvrf-905)#      route-target both 65105:10905
+Leaf-6(config-macvrf-905)#      route-target both 65100:10905
 Leaf-6(config-macvrf-905)#      redistribute learned
 Leaf-6(config-macvrf-905)#!
 Leaf-6(config-macvrf-905)#int vxlan1
@@ -347,20 +347,20 @@ Leaf-4(config)#!
 Leaf-4(config)#router bgp 65104
 Leaf-4(config-router-bgp)#   !
 Leaf-4(config-router-bgp)#   vlan 903
-Leaf-4(config-macvrf-903)#      rd 10.1.0.34:10903
+Leaf-4(config-macvrf-903)#      rd 10.1.0.35:10903
 Leaf-4(config-macvrf-903)#      route-target both 65100:10903
 Leaf-4(config-macvrf-903)#      redistribute learned
 Leaf-4(config-macvrf-903)#   vlan 905
-Leaf-4(config-macvrf-905)#      rd 10.1.0.34:10905
+Leaf-4(config-macvrf-905)#      rd 10.1.0.35:10905
 Leaf-4(config-macvrf-905)#      route-target both 65100:10905
 Leaf-4(config-macvrf-905)#      redistribute learned
 Leaf-4(config-macvrf-905)#   vrf Otus_BLUE
-Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      rd 10.1.0.34:15001
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      rd 10.1.0.35:15001
 Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target import evpn 65100:15001
 Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target export evpn 65100:15001
 Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      redistribute connected
 Leaf-4(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
-Leaf-4(config-router-bgp-vrf-Otus_RED)#      rd 10.1.0.34:15002
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      rd 10.1.0.35:15002
 Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target import evpn 65100:15002
 Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target export evpn 65100:15002
 Leaf-4(config-router-bgp-vrf-Otus_RED)#      redistribute connected

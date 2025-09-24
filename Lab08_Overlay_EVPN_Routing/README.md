@@ -173,7 +173,7 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 Обнулились, чистое оборудование, никто ничего не настраивал, пустое железо, просто прокатываем конфиг Underlay
 Сразу же за этим поднимаем Overlay согласно таблице выше. пока без VRF, просто делаем связность.
-*конфигурацию MLAG и ESI-LAG опустим, она есть [тут]()*
+*конфигурацию MLAG и ESI-LAG опустим, она есть [тут](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab07_Overlay_EVPN_MLAG#readme)*
 
 ## Настраиваем VXLAN от Серверов к Borderleaf
 
@@ -193,14 +193,7 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 ```
 ```
 
-**Leaf-3**
-```
-```
-
-**Leaf-4**
-```
-```
-## Терминимуем VRF на Borderleaf
+## Терминимуем VXLAN/VRF на Borderleaf
 
 **Leaf-3**
 ```
@@ -209,6 +202,57 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 **Leaf-4**
 ```
 ```
+
+## Проверяем тоннели Vxlan и пинг от серверов к VRF
+
+### Состояние VxLan
+
+**Leaf-1**
+
+![EVPN_L3_leaf-1-1.png](EVPN_L3_leaf-1-1.png)
+
+**Leaf-2**
+
+![EVPN_L3_leaf-2-1.png](EVPN_L3_leaf-2-1.png)
+
+**Leaf-3**
+
+![EVPN_L3_leaf-3-0.png](EVPN_L3_leaf-3-0.png)
+
+**Leaf-4**
+
+![EVPN_L3_leaf-4-0.png](EVPN_L3_leaf-4-0.png)
+
+**Leaf-5**
+
+![EVPN_L3_leaf-5-1.png](EVPN_L3_leaf-5-1.png)
+
+**Leaf-6**
+
+![EVPN_L3_leaf-6-1.png](EVPN_L3_leaf-6-1.png)
+
+
+### Связность
+
+**Client-1 PING+DUMP**
+
+*Ping*
+
+![EVPN_client_1-1_L3_ping.png](EVPN_client_1-1_L3_ping.png)
+
+*Dump*
+
+![EVPN_client-1-1_L3-1_dump.png](EVPN_client-1-1_L3-1_dump.png)
+
+**Client-3 PING+DUMP**
+
+*Ping*
+
+![EVPN_client_3-1_L3_ping.png](EVPN_client_3-1_L3_ping.png)
+
+*Dump*
+
+![EVPN_client-3-1_L3-1_dump.png](EVPN_client-3-1_L3-1_dump.png)
 
 ## Строим сессию между Borderleaf's и Gateway, анонсируем маршруты.
 
@@ -242,28 +286,6 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 ![EVPN_L3_gateway-1-1.png](EVPN_L3_gateway-1-1.png)
 
 ## Проверяем связность и смотрим в дампы
-
-###  К шлюзу и адресам в VRF на Borderleaf's
-
-**Client-1 PING+DUMP**
-
-*Ping*
-
-![EVPN_client_1-1_L3_ping.png](EVPN_client_1-1_L3_ping.png)
-
-*Dump*
-
-![EVPN_client-1-1_L3-1_dump.png](EVPN_client-1-1_L3-1_dump.png)
-
-**Client-3 PING+DUMP**
-
-*Ping*
-
-![EVPN_client_3-1_L3_ping.png](EVPN_client_3-1_L3_ping.png)
-
-*Dump*
-
-![EVPN_client-3-1_L3-1_dump.png](EVPN_client-3-1_L3-1_dump.png)
 
 ###  К "внешним" адресам на Gateway
 

@@ -295,7 +295,7 @@ Leaf-3(config-macvrf-905)#      redistribute learned
 Leaf-3(config-macvrf-905)#   vrf Otus_BLUE
 Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      rd 10.1.0.34:15001
 Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target import evpn 65100:15001
-Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target export evpn 65100:151
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target export evpn 65100:15001
 Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      redistribute connected
 Leaf-3(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
 Leaf-3(config-router-bgp-vrf-Otus_RED)#      rd 10.1.0.34:15002

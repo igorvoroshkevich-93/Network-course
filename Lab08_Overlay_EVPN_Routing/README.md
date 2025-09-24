@@ -131,6 +131,10 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 |Client_1  |vlanIf903 |  172.16.0.10/24                   |903  |Client_1 po10 – po20  Leaf_1_2  |  Client        |
 |Client_3  |vlanIf903 |  172.16.2.20/24                   |905  |Client_3 po10 – po20  Leaf_5_6  |  Client        |
 |----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|Gateway-1 |eth1      |  172.16.4.0/31                    | --  |Leaf_3 eth7  – eth1 Gateway-1   |  Interconnect  |
+|Gateway-1 |eth2      |  172.16.4.2/31                    | --  |Leaf_4 eth7  – eth2 Gateway-1   |  Interconnect  |
+|Gateway-1 |loopback0 |  8.8.8.8/32                       | --  | None                           |  Loopback      |
+|Gateway-1 |loopback1 |  1.1.1.1/32                       | --  | None                           |  Loopback      |
 
 ## AS-Number
 
@@ -263,6 +267,8 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 ###  К "внешним" адресам на Gateway
 
+Прибьем Loopback адреса согласно таблицы выше.
+
 **Client-1 PING+DUMP**
 
 *Ping*
@@ -308,6 +314,8 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 ## Смотрим в таблицы маршрутизации на Borderleaf's и Gateway
 
+*а так же в Vxlan и все-все-все*
+
 **Leaf-3**
 
 ![EVPN_L3_leaf-3-2.png](EVPN_L3_leaf-3-2.png)
@@ -319,3 +327,16 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 **Gateway-1**
 
 ![EVPN_L3_gateway-1-2.png](EVPN_L3_gateway-1-2.png)
+
+## Конфигурационные файлы
+
+Конфигурация [ESI-LAG](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab08_Overlay_EVPN_Routing/ESI_LAG_R_full_conf.md)
+
+Конфигурация [MLAG](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab08_Overlay_EVPN_Routing/Peer-link_MLAG_R_full_conf.md)
+
+Конфигурация [OSPF](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab08_Overlay_EVPN_Routing/OSPF_R_full_conf.md)
+
+Конфигурация [EVPN+VxLan](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab08_Overlay_EVPN_Routing/EVPN_R_full_conf.md)
+
+Конфигурация [Routing](https://github.com/igorvoroshkevich-93/Network-course/blob/main/Lab08_Overlay_EVPN_Routing/Routing_full_conf.md)
+

@@ -179,28 +179,201 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 **Leaf-1**
 ```
+Leaf-1(config)#router bgp 65112
+Leaf-1(config-router-bgp)#   !
+Leaf-1(config-router-bgp)#   vlan 903
+Leaf-1(config-macvrf-903)#      rd 10.1.0.32:10903
+Leaf-1(config-macvrf-903)#      route-target both 65100:10903
+Leaf-1(config-macvrf-903)#      redistribute learned
+Leaf-1(config-macvrf-903)#!
+Leaf-1(config-macvrf-903)#int vxlan1
+Leaf-1(config-if-Vx1)#  vxlan source-int lo1
+Leaf-1(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-1(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-1(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-1(config-if-Vx1)#!
+Leaf-1(config-if-Vx1)#end
+
 ```
 
 **Leaf-2**
 ```
+Leaf-2(config)#router bgp 65112
+Leaf-2(config-router-bgp)#   !
+Leaf-2(config-router-bgp)#   vlan 903
+Leaf-2(config-macvrf-903)#      rd 10.1.0.32:10903
+Leaf-2(config-macvrf-903)#      route-target both 65100:10903
+Leaf-2(config-macvrf-903)#      redistribute learned
+Leaf-2(config-macvrf-903)#!
+Leaf-2(config-macvrf-903)#int vxlan1
+Leaf-2(config-if-Vx1)#  vxlan source-int lo1
+Leaf-2(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-2(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-2(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-2(config-if-Vx1)#!
+Leaf-2(config-if-Vx1)#end
+
 ```
 
 **Leaf-5**
 ```
+Leaf-5(config)#router bgp 65105
+Leaf-5(config-router-bgp)#   !
+Leaf-5(config-router-bgp)#   vlan 905
+Leaf-5(config-macvrf-905)#      rd 10.1.0.36:10905
+Leaf-5(config-macvrf-905)#      route-target both 65105:10905
+Leaf-5(config-macvrf-905)#      redistribute learned
+Leaf-5(config-macvrf-905)#!
+Leaf-5(config-macvrf-905)#int vxlan1
+Leaf-5(config-if-Vx1)#  vxlan source-int lo1
+Leaf-5(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-5(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-5(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-5(config-if-Vx1)#!
+Leaf-5(config-if-Vx1)#end
+
 ```
 
 **Leaf-6**
 ```
+Leaf-6(config)#router bgp 65106
+Leaf-6(config-router-bgp)#   !
+Leaf-6(config-router-bgp)#   vlan 905
+Leaf-6(config-macvrf-905)#      rd 10.1.0.37:10905
+Leaf-6(config-macvrf-905)#      route-target both 65105:10905
+Leaf-6(config-macvrf-905)#      redistribute learned
+Leaf-6(config-macvrf-905)#!
+Leaf-6(config-macvrf-905)#int vxlan1
+Leaf-6(config-if-Vx1)#  vxlan source-int lo1
+Leaf-6(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-6(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-6(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-6(config-if-Vx1)#!
+Leaf-6(config-if-Vx1)#end
+
 ```
 
 ## Терминимуем VXLAN/VRF на Borderleaf
 
 **Leaf-3**
 ```
+Leaf-3(config)#vlan 903
+Leaf-3(config-vlan-903)#   name Otus_BLUE
+Leaf-3(config-vlan-903)#!
+Leaf-3(config-vlan-903)#vlan 905
+Leaf-3(config-vlan-905)#   name Otus_RED
+Leaf-3(config-vlan-905)#!
+Leaf-3(config-vlan-905)#vrf instance Otus_BLUE
+Leaf-3(config-vrf-Otus_BLUE)#!
+Leaf-3(config-vrf-Otus_BLUE)#vrf instance Otus_RED
+Leaf-3(config-vrf-Otus_RED)#!
+Leaf-3(config-vrf-Otus_RED)#interface vlan903
+Leaf-3(config-if-Vl903)#   vrf Otus_BLUE
+Leaf-3(config-if-Vl903)#   ip address virtual 172.16.0.1
+Leaf-3(config-if-Vl903)#!
+Leaf-3(config-if-Vl903)#interface vlan905
+Leaf-3(config-if-Vl905)#   vrf Otus_RED
+Leaf-3(config-if-Vl905)#   ip address 172.16.2.2/24
+Leaf-3(config-if-Vl905)#   ip virtual-router address 172.16.2.1
+Leaf-3(config-if-Vl905)#!
+Leaf-3(config-if-Vl905)#ip virtual-router mac-address c0:01:09:05:00:34
+Leaf-3(config)#!
+Leaf-3(config)#ip routing vrf Otus_BLUE
+Leaf-3(config)#ip routing vrf Otus_RED
+Leaf-3(config)#!
+Leaf-3(config)#router bgp 65103
+Leaf-3(config-router-bgp)#   !
+Leaf-3(config-router-bgp)#   vlan 903
+Leaf-3(config-macvrf-903)#      rd 10.1.0.34:10903
+Leaf-3(config-macvrf-903)#      route-target both 65100:10903
+Leaf-3(config-macvrf-903)#      redistribute learned
+Leaf-3(config-macvrf-903)#   vlan 905
+Leaf-3(config-macvrf-905)#      rd 10.1.0.34:10905
+Leaf-3(config-macvrf-905)#      route-target both 65100:10905
+Leaf-3(config-macvrf-905)#      redistribute learned
+Leaf-3(config-macvrf-905)#   vrf Otus_BLUE
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      rd 10.1.0.34:15001
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target import evpn 65100:151
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target export evpn 65100:151
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      redistribute connected
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      rd 10.1.0.34:15002
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      route-target import evpn 65100:1502
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      route-target export evpn 65100:1502
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      redistribute connected
+Leaf-3(config-router-bgp-vrf-Otus_RED)#
+Leaf-3(config-router-bgp-vrf-Otus_RED)#!
+Leaf-3(config-router-bgp-vrf-Otus_RED)#int vxlan1
+Leaf-3(config-if-Vx1)#  vxlan source-int lo1
+Leaf-3(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-3(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-3(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-3(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-3(config-if-Vx1)#  vxlan vrf Otus_BLUE vni 15001
+Leaf-3(config-if-Vx1)#  vxlan vrf Otus_RED vni 15002
+Leaf-3(config-if-Vx1)#!
+Leaf-3(config-if-Vx1)#end
+
 ```
 
 **Leaf-4**
 ```
+Leaf-4(config)#vlan 903
+Leaf-4(config-vlan-903)#   name Otus_BLUE
+Leaf-4(config-vlan-903)#!
+Leaf-4(config-vlan-903)#vlan 905
+Leaf-4(config-vlan-905)#   name Otus_RED
+Leaf-4(config-vlan-905)#!
+Leaf-4(config-vlan-905)#vrf instance Otus_BLUE
+Leaf-4(config-vrf-Otus_BLUE)#!
+Leaf-4(config-vrf-Otus_BLUE)#vrf instance Otus_RED
+Leaf-4(config-vrf-Otus_RED)#!
+Leaf-4(config-vrf-Otus_RED)#interface vlan903
+Leaf-4(config-if-Vl903)#   vrf Otus_BLUE
+Leaf-4(config-if-Vl903)#   ip address virtual 172.16.0.1
+Leaf-4(config-if-Vl903)#!
+Leaf-4(config-if-Vl903)#interface vlan905
+Leaf-4(config-if-Vl905)#   vrf Otus_RED
+Leaf-4(config-if-Vl905)#   ip address 172.16.2.3/24
+Leaf-4(config-if-Vl905)#   ip virtual-router address 172.16.2.1
+Leaf-4(config-if-Vl905)#!
+Leaf-4(config-if-Vl905)#ip virtual-router mac-address c0:01:09:05:00:34
+Leaf-4(config)#!
+Leaf-4(config)#ip routing vrf Otus_BLUE
+Leaf-4(config)#ip routing vrf Otus_RED
+Leaf-4(config)#!
+Leaf-4(config)#router bgp 65104
+Leaf-4(config-router-bgp)#   !
+Leaf-4(config-router-bgp)#   vlan 903
+Leaf-4(config-macvrf-903)#      rd 10.1.0.34:10903
+Leaf-4(config-macvrf-903)#      route-target both 65100:10903
+Leaf-4(config-macvrf-903)#      redistribute learned
+Leaf-4(config-macvrf-903)#   vlan 905
+Leaf-4(config-macvrf-905)#      rd 10.1.0.34:10905
+Leaf-4(config-macvrf-905)#      route-target both 65100:10905
+Leaf-4(config-macvrf-905)#      redistribute learned
+Leaf-4(config-macvrf-905)#   vrf Otus_BLUE
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      rd 10.1.0.34:15001
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target import evpn 65100:151
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target export evpn 65100:151
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      redistribute connected
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      rd 10.1.0.34:15002
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target import evpn 65100:1502
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target export evpn 65100:1502
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      redistribute connected
+Leaf-4(config-router-bgp-vrf-Otus_RED)#!
+Leaf-4(config-router-bgp-vrf-Otus_RED)#int vxlan1
+Leaf-4(config-if-Vx1)#  vxlan source-int lo1
+Leaf-4(config-if-Vx1)#  vxlan udp-port 4789
+Leaf-4(config-if-Vx1)#  vxlan learn-restrict any
+Leaf-4(config-if-Vx1)#  vxlan vlan 903 vni 10903
+Leaf-4(config-if-Vx1)#  vxlan vlan 905 vni 10905
+Leaf-4(config-if-Vx1)#  vxlan vrf Otus_BLUE vni 15001
+Leaf-4(config-if-Vx1)#  vxlan vrf Otus_RED vni 15002
+Leaf-4(config-if-Vx1)#!
+Leaf-4(config-if-Vx1)#end
+
 ```
 
 ## Проверяем тоннели Vxlan и пинг от серверов к VRF
@@ -209,52 +382,65 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 **Leaf-1**
 
-![EVPN_L3_leaf-1-1.png](EVPN_L3_leaf-1-1.png)
+![EVPN_L3_R_leaf-1-1.png](EVPN_L3_R_leaf-1-1.png)
 
 **Leaf-2**
 
-![EVPN_L3_leaf-2-1.png](EVPN_L3_leaf-2-1.png)
+![EVPN_L3_R_leaf-2-1.png](EVPN_L3_R_leaf-2-1.png)
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-0.png](EVPN_L3_leaf-3-0.png)
+![EVPN_L3_R_leaf-3-0.png](EVPN_L3_R_leaf-3-0.png)
 
 **Leaf-4**
 
-![EVPN_L3_leaf-4-0.png](EVPN_L3_leaf-4-0.png)
+![EVPN_L3_R_leaf-4-0.png](EVPN_L3_R_leaf-4-0.png)
 
 **Leaf-5**
 
-![EVPN_L3_leaf-5-1.png](EVPN_L3_leaf-5-1.png)
+![EVPN_L3_R_leaf-5-1.png](EVPN_L3_R_leaf-5-1.png)
 
 **Leaf-6**
 
-![EVPN_L3_leaf-6-1.png](EVPN_L3_leaf-6-1.png)
-
+![EVPN_L3_R_leaf-6-1.png](EVPN_L3_R_leaf-6-1.png)
 
 ### Связность
+
+Дампить будем на Leaf-3 и Leaf-4 - Интерфейсах в сторону спайнов
 
 **Client-1 PING+DUMP**
 
 *Ping*
 
-![EVPN_client_1-1_L3_ping.png](EVPN_client_1-1_L3_ping.png)
+![EVPN_client_1-1_L3_R_ping.png](EVPN_client_1-1_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-1-1_L3-1_dump.png](EVPN_client-1-1_L3-1_dump.png)
+![EVPN_client-1-1_L3_R_1_dump.png](EVPN_client-1-1_L3_R_1_dump.png)
 
 **Client-3 PING+DUMP**
 
 *Ping*
 
-![EVPN_client_3-1_L3_ping.png](EVPN_client_3-1_L3_ping.png)
+![EVPN_client_3-1_L3_R_ping.png](EVPN_client_3-1_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-3-1_L3-1_dump.png](EVPN_client-3-1_L3-1_dump.png)
+![EVPN_client-3-1_L3_R_1_dump.png](EVPN_client-3-1_L3_R_1_dump.png)
 
 ## Строим сессию между Borderleaf's и Gateway, анонсируем маршруты.
+
+При трасляции маршрутов пойдем следующим путем
+
+1. Создадим еще 1 VRF для Gateway на Leaf-3 и Leaf-4
+2. С помощью RT обменяемся метками между новым VRF и ранее созданными
+3. Построим сессию с Gateway от нового VRF, чтобы передать маршруты.
+
+Таким образом мы добьемся варианта VRF-Lite причем подход вида
+HUB-Spoke где HUB - новый VRF, а предыдущие - Spoke
+
+И весь наш подход, как описано ранее - вариант **Centralized gateway**
+вариант более масштабируемый, можно распределять VxLan домен на сколько угодно Leaf с единой точкой терминации, но в будущем, можно распределять подсети, терминируя их на обычных leaf и через общий VRF так же их передавать выше через обмен метками, прописывать статикроуты и тд. в одной точке.
 
 **Leaf-3**
 ```
@@ -275,15 +461,15 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-1.png](EVPN_L3_leaf-3-1.png)
+![EVPN_L3_R_leaf-3-1.png](EVPN_L3_R_leaf-3-1.png)
 
 **Leaf-4**
 
-![EVPN_L3_leaf-4-1.png](EVPN_L3_leaf-4-1.png)
+![EVPN_L3_R_leaf-4-1.png](EVPN_L3_R_leaf-4-1.png)
 
 **Gateway-1**
 
-![EVPN_L3_gateway-1-1.png](EVPN_L3_gateway-1-1.png)
+![EVPN_L3_R_gateway-1-1.png](EVPN_L3_R_gateway-1-1.png)
 
 ## Проверяем связность и смотрим в дампы
 
@@ -295,21 +481,21 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 *Ping*
 
-![EVPN_client_1-2_L3_ping.png](EVPN_client_1-2_L3_ping.png)
+![EVPN_client_1-2_L3_R_ping.png](EVPN_client_1-2_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-1-2_L3-1_dump.png](EVPN_client-1-2_L3-1_dump.png)
+![EVPN_client-1-2_L3_R_1_dump.png](EVPN_client-1-2_L3_R_1_dump.png)
 
 **Client-3 PING+DUMP**
 
 *Ping*
 
-![EVPN_client_3-2_L3_ping.png](EVPN_client_3-2_L3_ping.png)
+![EVPN_client_3-2_L3_R_ping.png](EVPN_client_3-2_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-3-2_L3-1_dump.png](EVPN_client-3-2_L3-1_dump.png)
+![EVPN_client-3-2_L3_R_1_dump.png](EVPN_client-3-2_L3_R_1_dump.png)
 
 ###  Между собой
 
@@ -317,21 +503,21 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 *Ping*
 
-![EVPN_client_1-3_L3_ping.png](EVPN_client_1-3_L3_ping.png)
+![EVPN_client_1-3_L3_R_ping.png](EVPN_client_1-3_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-1-3_L3-1_dump.png](EVPN_client-1-3_L3-1_dump.png)
+![EVPN_client-1-3_L3_R_1_dump.png](EVPN_client-1-3_L3_R_1_dump.png)
 
 **Client-3 PING+DUMP**
 
 *Ping*
 
-![EVPN_client_3-3_L3_ping.png](EVPN_client_3-3_L3_ping.png)
+![EVPN_client_3-3_L3_R_ping.png](EVPN_client_3-3_L3_R_ping.png)
 
 *Dump*
 
-![EVPN_client-3-3_L3-1_dump.png](EVPN_client-3-3_L3-1_dump.png)
+![EVPN_client-3-3_L3_R_1_dump.png](EVPN_client-3-3_L3_R_1_dump.png)
 
 
 ## Смотрим в таблицы маршрутизации на Borderleaf's и Gateway
@@ -340,15 +526,15 @@ Sn - нумеруем по лучшим правилам, начиная с "0" 
 
 **Leaf-3**
 
-![EVPN_L3_leaf-3-2.png](EVPN_L3_leaf-3-2.png)
+![EVPN_L3_R_leaf-3-2.png](EVPN_L3_R_leaf-3-2.png)
 
 **Leaf-4**
 
-![EVPN_L3_leaf-4-2.png](EVPN_L3_leaf-4-2.png)
+![EVPN_L3_R_leaf-4-2.png](EVPN_L3_R_leaf-4-2.png)
 
 **Gateway-1**
 
-![EVPN_L3_gateway-1-2.png](EVPN_L3_gateway-1-2.png)
+![EVPN_L3_R_gateway-1-2.png](EVPN_L3_R_gateway-1-2.png)
 
 ## Конфигурационные файлы
 

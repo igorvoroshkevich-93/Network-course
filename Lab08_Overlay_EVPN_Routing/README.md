@@ -269,6 +269,7 @@ Leaf-3(config-vrf-Otus_BLUE)#vrf instance Otus_RED
 Leaf-3(config-vrf-Otus_RED)#!
 Leaf-3(config-vrf-Otus_RED)#interface vlan903
 Leaf-3(config-if-Vl903)#   vrf Otus_BLUE
+Leaf-3(config-if-Vl903)#   ip address 172.16.0.2/24
 Leaf-3(config-if-Vl903)#   ip address virtual 172.16.0.1
 Leaf-3(config-if-Vl903)#!
 Leaf-3(config-if-Vl903)#interface vlan905
@@ -330,6 +331,7 @@ Leaf-4(config-vrf-Otus_BLUE)#vrf instance Otus_RED
 Leaf-4(config-vrf-Otus_RED)#!
 Leaf-4(config-vrf-Otus_RED)#interface vlan903
 Leaf-4(config-if-Vl903)#   vrf Otus_BLUE
+Leaf-4(config-if-Vl903)#   ip address 172.16.0.3/24
 Leaf-4(config-if-Vl903)#   ip address virtual 172.16.0.1
 Leaf-4(config-if-Vl903)#!
 Leaf-4(config-if-Vl903)#interface vlan905

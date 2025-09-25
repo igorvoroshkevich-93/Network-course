@@ -15,3 +15,6 @@
 [ДЗ6 - eBGP-OSPF/Overlay](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab06_Overlay_EVPN_L3)
 
 [ДЗ7 - eBGP-OSPF/Overlay_MLAG](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab07_Overlay_EVPN_MLAG)
+
+[ДЗ8 - eBGP-OSPF/Overlay+VRF_Routing](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab08_Overlay_EVPN_Routing)
+

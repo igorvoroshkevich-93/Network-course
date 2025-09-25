@@ -438,17 +438,146 @@ HUB-Spoke где HUB - новый VRF, а предыдущие - Spoke
 
 **Leaf-3**
 ```
+Leaf-3(config)#!
+Leaf-3(config)#ip prefix-list Client_nets seq 10 permit 172.16.0.0/24
+Leaf-3(config)#ip prefix-list Client_nets seq 20 permit 172.16.2.0/24
+Leaf-3(config)#!
+Leaf-3(config)#vrf instance Otus_Gateway
+Leaf-3(config-vrf-Otus_Gateway)#!
+Leaf-3(config-vrf-Otus_Gateway)#ip routing vrf Otus_Gateway
+Leaf-3(config)#route-map RM-ALL-ROUTES permit 10
+Leaf-3(config)#route-map Client_networks permit 10
+Leaf-3(config-route-map-Client_networks)#   match ip address prefix-list Client_nets
+Leaf-3(config-route-map-Client_networks)#!
+Leaf-3(config-route-map-Client_networks)#interface Ethernet7
+Leaf-3(config-if-Et7)#   no switchport
+Leaf-3(config-if-Et7)#   vrf Otus_Gateway
+Leaf-3(config-if-Et7)#   ip address 10.4.0.1/31
+Leaf-3(config-if-Et7)#!
+Leaf-3(config)#router bgp 65103
+Leaf-3(config-router-bgp)#   vrf Otus_BLUE
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target export 65100:15111
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#      route-target import 65100:15999
+Leaf-3(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      route-target export 65100:15111
+Leaf-3(config-router-bgp-vrf-Otus_RED)#      route-target import 65100:15999
+Leaf-3(config-router-bgp-vrf-Otus_RED)#   vrf Otus_Gateway
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      router-id 10.4.0.1
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      rd 10.4.0.1:15000
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      route-target import 65100:15111
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      route-target export 65100:15999
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      maximum-paths 4 ecmp 64
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS peer group
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS remote-as 65200
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS timers 30 90
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS password Otus_Gateway
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      neighbor 10.4.0.0 peer group Gateway-OTUS
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      redistribute connected route-map Client_networks
+Leaf-3(config-router-bgp-vrf-Otus_Gateway)#      address-family ipv4
+Leaf-3(config-router-bgp-vrf-Otus_Gateway-af)#         neighbor Gateway-OTUS activate
+Leaf-3(config-router-bgp-vrf-Otus_Gateway-af)#
+Leaf-3(config)#  router general
+Leaf-3(config-router-general)#   vrf Otus_BLUE
+Leaf-3(config-router-general-vrf-Otus_BLUE)#      leak routes source-vrf Otus_Gateway subscribe-policy RM-ALL-ROUTES
+Leaf-3(config-router-general-vrf-Otus_BLUE)#   !
+Leaf-3(config-router-general-vrf-Otus_BLUE)#   vrf Otus_Gateway
+Leaf-3(config-router-general-vrf-Otus_Gateway)#      leak routes source-vrf Otus_BLUE subscribe-policy RM-ALL-ROUTES
+Leaf-3(config-router-general-vrf-Otus_Gateway)#      leak routes source-vrf Otus_RED subscribe-policy RM-ALL-ROUTES
+Leaf-3(config-router-general-vrf-Otus_Gateway)#   !
+Leaf-3(config-router-general-vrf-Otus_Gateway)#   vrf Otus_RED
+Leaf-3(config-router-general-vrf-Otus_RED)#      leak routes source-vrf Otus_Gateway subscribe-policy RM-ALL-ROUTES
+
+
 ```
 
 **Leaf-4**
 ```
-```
-**Leaf-3**
-```
+Leaf-4(config)#!
+Leaf-4(config)#ip prefix-list Client_nets seq 10 permit 172.16.0.0/24
+Leaf-4(config)#ip prefix-list Client_nets seq 20 permit 172.16.2.0/24
+Leaf-4(config)#ip prefix-list Client_nets seq 30 permit 10.4.0.0/30
+Leaf-4(config)#!
+Leaf-4(config)#vrf instance Otus_Gateway
+Leaf-4(config-vrf-Otus_Gateway)#!
+Leaf-4(config-vrf-Otus_Gateway)#ip routing vrf Otus_Gateway
+Leaf-4(config)#route-map RM-ALL-ROUTES permit 10
+Leaf-4(config)#route-map Client_networks permit 10
+Leaf-4(config-route-map-Client_networks)#   match ip address prefix-list Client_nets
+Leaf-4(config-route-map-Client_networks)#!
+Leaf-4(config-route-map-Client_networks)#interface Ethernet7
+Leaf-4(config-if-Et7)#   no switchport
+Leaf-4(config-if-Et7)#   vrf Otus_Gateway
+Leaf-4(config-if-Et7)#   ip address 10.4.0.3/31
+Leaf-4(config-if-Et7)#!
+Leaf-4(config-if-Et7)#router bgp 65104
+Leaf-4(config-router-bgp)#   vrf Otus_BLUE
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target export 65100:15111
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#      route-target import 65100:15999
+Leaf-4(config-router-bgp-vrf-Otus_BLUE)#   vrf Otus_RED
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target export 65100:15111
+Leaf-4(config-router-bgp-vrf-Otus_RED)#      route-target import 65100:15999
+Leaf-4(config-router-bgp-vrf-Otus_RED)#   vrf Otus_Gateway
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      router-id 10.4.0.3
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      rd 10.4.0.3:15000
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      route-target import 65100:15111
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      route-target export 65100:15999
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      maximum-paths 4 ecmp 64
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS peer group
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS remote-as 65200
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS timers 30 90
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      neighbor Gateway-OTUS password Otus_Gateway
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      neighbor 10.4.0.2 peer group Gateway-OTUS
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      redistribute connected route-map Client_networks
+Leaf-4(config-router-bgp-vrf-Otus_Gateway)#      address-family ipv4
+Leaf-4(config-router-bgp-vrf-Otus_Gateway-af)#         neighbor Gateway-OTUS activate
+Leaf-4(config-router-bgp-vrf-Otus_Gateway-af)#!
+Leaf-4(config)#  router general
+Leaf-4(config-router-general)#   vrf Otus_BLUE
+Leaf-4(config-router-general-vrf-Otus_BLUE)#      leak routes source-vrf Otus_Gateway subscribe-policy RM-ALL-ROUTES
+Leaf-4(config-router-general-vrf-Otus_BLUE)#   !
+Leaf-4(config-router-general-vrf-Otus_BLUE)#   vrf Otus_Gateway
+Leaf-4(config-router-general-vrf-Otus_Gateway)#      leak routes source-vrf Otus_BLUE subscribe-policy RM-ALL-ROUTES
+Leaf-4(config-router-general-vrf-Otus_Gateway)#      leak routes source-vrf Otus_RED subscribe-policy RM-ALL-ROUTES
+Leaf-4(config-router-general-vrf-Otus_Gateway)#   !
+Leaf-4(config-router-general-vrf-Otus_Gateway)#   vrf Otus_RED
+Leaf-4(config-router-general-vrf-Otus_RED)#      leak routes source-vrf Otus_Gateway subscribe-policy RM-ALL-ROUTES
+
+
 ```
 
 **Gateway-1**
 ```
+localhost(config)#hostname Gateway-1
+Gateway-1(config)#!
+Gateway-1(config)#ip routing
+Gateway-1(config)#interface Ethernet1
+Gateway-1(config-if-Et1)#   no switchport
+Gateway-1(config-if-Et1)#   ip address 10.4.0.0/31
+Gateway-1(config-if-Et1)#!
+Gateway-1(config-if-Et1)#interface Ethernet2
+Gateway-1(config-if-Et2)#   no switchport
+Gateway-1(config-if-Et2)#   ip address 10.4.0.2/31
+Gateway-1(config-if-Et2)#!
+Gateway-1(config-if-Et2)#interface loopback0
+Gateway-1(config-if-Lo0)#   ip address 8.8.8.8/32
+Gateway-1(config-if-Lo0)#!
+Gateway-1(config-if-Lo0)#interface loopback1
+Gateway-1(config-if-Lo1)#   ip address 1.1.1.1/32
+Gateway-1(config-if-Lo1)#!
+Gateway-1(config-if-Lo1)#ip prefix-list G_nets seq 10 permit 8.8.8.8/32
+Gateway-1(config)#ip prefix-list G_nets seq 20 permit 1.1.1.1/32
+Gateway-1(config)#!
+Gateway-1(config)#route-map Global_networks permit 10
+Gateway-1(config-route-map-Global_networks)#   match ip address prefix-list G_nets
+Gateway-1(config-route-map-Global_networks)#!
+Gateway-1(config-route-map-Global_networks)#ip prefix-list Client_nets seq 10 permit 172.16.0.0/24
+Gateway-1(config)#ip prefix-list Client_nets seq 20 permit 172.16.2.0/24
+Gateway-1(config)#!
+Gateway-1(config)#route-map Client_networks permit 10
+Gateway-1(config-route-map-Client_networks)#   match ip address prefix-list Client_nets
+Gateway-1(config-route-map-Client_networks)#!
+
+
 ```
 
 Смотрим в сессии и состояния соседства
@@ -457,9 +586,13 @@ HUB-Spoke где HUB - новый VRF, а предыдущие - Spoke
 
 ![EVPN_L3_R_leaf-3-1.png](EVPN_L3_R_leaf-3-1.png)
 
+![EVPN_L3_R_leaf-3-2.png](EVPN_L3_R_leaf-3-2.png)
+
 **Leaf-4**
 
 ![EVPN_L3_R_leaf-4-1.png](EVPN_L3_R_leaf-4-1.png)
+
+![EVPN_L3_R_leaf-4-2.png](EVPN_L3_R_leaf-4-2.png)
 
 **Gateway-1**
 
@@ -520,11 +653,11 @@ HUB-Spoke где HUB - новый VRF, а предыдущие - Spoke
 
 **Leaf-3**
 
-![EVPN_L3_R_leaf-3-2.png](EVPN_L3_R_leaf-3-2.png)
+![EVPN_L3_R_leaf-3-3.png](EVPN_L3_R_leaf-3-3.png)
 
 **Leaf-4**
 
-![EVPN_L3_R_leaf-4-2.png](EVPN_L3_R_leaf-4-2.png)
+![EVPN_L3_R_leaf-4-3.png](EVPN_L3_R_leaf-4-3.png)
 
 **Gateway-1**
 

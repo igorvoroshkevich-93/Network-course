@@ -66,7 +66,13 @@
 3) Открепляем вланы от старой системы, прикрепляем их на работу новой фабрики
 4) проверяем работоспособность
 
+Показывать как настраивалась старая сеть не будет, отразим результат работы, схема выше
+
+#### Тут будет вся информация по старой стеи, IP-планы, связность, состояние STP
+
+
 ## Осуществляем переход
+
 
 1) Простраиваем связность каждого из SITE - проверяем связность внутри каждого из DC
 
@@ -77,3 +83,68 @@
 Конфигурационные файлы
 
 Таблица IP
+
+
+|Device    |Port      |IPv4                               |VLAN|Link                             |Comment         |
+|----------|----------|-----------------------------------|----|---------------------------------|----------------|
+|Spine_1_1   |eth1      |  10.2.0.0/31                      | --  |Spine_1 eth1 – eth1 Leaf_1      |  Interconnect  |
+|Spine_1_1   |eth2      |  10.2.0.2/31                      | --  |Spine_1 eth2 – eth1 Leaf_2      |  Interconnect  |
+|Spine_1_1   |eth3      |  10.2.0.4/31                      | --  |Spine_1 eth3 – eth1 Leaf_3      |  Interconnect  |
+|Spine_1_1   |eth4      |  10.2.0.6/31                      | --  |Spine_2 eth4 – eth1 Leaf_4      |  Interconnect  |
+|Spine_1_1   |loopback0 |  10.0.0.0/32                      | --  | None                           |  Loopback      |
+|Spine_2_1   |eth1      |  10.2.1.0/31                      | --  |Spine_2 eth1 – eth2 Leaf_1      |  Interconnect  |
+|Spine_2_1   |eth2      |  10.2.1.2/31                      | --  |Spine_2 eth2 – eth2 Leaf_2      |  Interconnect  |
+|Spine_2_1   |eth3      |  10.2.1.4/31                      | --  |Spine_2 eth3 – eth2 Leaf_3      |  Interconnect  |
+|Spine_2_1   |eth4      |  10.2.1.6/31                      | --  |Spine_2 eth4 – eth2 Leaf_4      |  Interconnect  |
+|Spine_2_1   |loopback0 |  10.0.0.1/32                      | --  | None                           |  Loopback      |
+|----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|Leaf_1_1    |eth1      |  10.2.0.1/31                      | --  |Leaf_1 eth1 – eth1 Spine_1      |  Interconnect  |
+|Leaf_1_1    |eth2      |  10.2.1.1/31                      | --  |Leaf_1 eth2 – eth1 Spine_2      |  Interconnect  |
+|Leaf_1_1    |eth3      |  10.3.0.0/31                      | --  |Leaf_1 eth3 – eth3  Leaf_2      |  Keepalive     |
+|Leaf_1_1    |eth4      |  None                             |4090 |Leaf_1 po10 – po10  Leaf_2      |  Peer-link     |
+|Leaf_1_1    |eth5      |  None                             |4090 |Leaf_1 po10 – po10  Leaf_2      |  Peer-link     |
+|Leaf_1_1    |vlanIf4090|  10.3.0.2/31                      |4090 | Leaf_1 po10 Leaf_2 po10        |  Peer-link     |
+|Leaf_1_1    |eth7      |  None                             |903  |Leaf_1 po20  – po10 Client_1    |  Client        |
+|Leaf_1_1    |loopback0 |  10.0.0.32/32                     | --  | None                           |  Loopback      |
+|Leaf_1_1    |loopback1 |  10.1.0.32/32                     | --  | Shared with Leaf_2             |  Loopback      |
+|----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|Leaf_2_1    |eth1      |  10.2.0.3/31                      | --  |Leaf_2 eth1 – eth2 Spine_1      |  Interconnect  |
+|Leaf_2_1    |eth2      |  10.2.1.3/31                      | --  |Leaf_2 eth2 – eth2 Spine_2      |  Interconnect  |
+|Leaf_2_1    |eth3      |  10.3.0.1/31                      | --  |Leaf_2 eth3 – eth3  Leaf_1      |  Keepalive     |
+|Leaf_2_1    |eth4      |  None                             |4090 |Leaf_2 po10 – po10  Leaf_1      |  Peer-link     |
+|Leaf_2_1    |eth5      |  None                             |4090 |Leaf_2 po10 – po10  Leaf_1      |  Peer-link     |
+|Leaf_2_1    |vlanIf4090|  10.3.0.3/31                      |4090 | Leaf_2 po10 Leaf_1 po10        |  Peer-link     |
+|Leaf_2_1    |eth7      |  None                             |903  |Leaf_2 po20  – po10 Client_1    |  Client        |
+|Leaf_2_1    |loopback0 |  10.0.0.33/32                     | --  | None                           |  Loopback      |
+|Leaf_2_1    |loopback1 |  10.1.0.32/32                     | --  | Shared with Leaf_1             |  Loopback      |
+|----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|Leaf_3_1    |eth1      |  10.2.0.5/31                      | --  |Leaf_3 eth1 – eth1 Spine_1      |  Interconnect  |
+|Leaf_3_1    |eth2      |  10.2.1.5/31                      | --  |Leaf_3 eth2 – eth1 Spine_2      |  Interconnect  |
+|Leaf_3_1    |vlanIf903 |  172.16.0.1/24                    |903  | Virtual-IP                     |  VARP          |
+|Leaf_3_1    |vlanIf905 |  172.16.2.1/24                    |905  | Virtual-IP                     |  VARP          |
+|Leaf_3_1    |eth7      |  172.16.4.1/31                    | --  |Leaf_3 eth7  – eth1 Gateway-1   |  Client        |
+|Leaf_3_1    |loopback0 |  10.0.0.34/32                     | --  | None                           |  Loopback      |
+|Leaf_3_1    |loopback1 |  10.1.0.34/32                     | --  | Shared with Leaf_4             |  Loopback      |
+
+
+
+|----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|Client_1  |vlanIf903 |  172.16.0.10/24                   |903  |Client_1 po10 – po20  Leaf_1_2  |  Client        |
+|Client_2  |vlanIf903 |  172.16.0.10/24                   |903  |Client_1 po10 – po20  Leaf_1_2  |  Client        |
+|Client_3  |vlanIf903 |  172.16.2.20/24                   |905  |Client_3 po10 – po20  Leaf_5_6  |  Client        |
+|----------|----------|-----------------------------------|-----|--------------------------------|----------------|
+|DCI-1     |eth1      |  172.16.4.0/31                    | --  |Leaf_3 eth7  – eth1 Gateway-1   |  Interconnect  |
+|DCI-1     |eth2      |  172.16.4.2/31                    | --  |Leaf_4 eth7  – eth2 Gateway-1   |  Interconnect  |
+|DCI-1     |loopback0 |  8.8.8.8/32                       | --  | None                           |  Loopback      |
+|DCI-1     |loopback1 |  1.1.1.1/32                       | --  | None                           |  Loopback      |
+
+
+## Выполнение работ
+
+Строим сеть поверх старой, вся конфигурация будет отдельными файлами, показываем что получилось
+
+Прикладываем скриншоты работы протоколов
+
+Далее - длеаем переход по принципу - отключаем связность по l2 и l3 через старое решение и переводим его на новое - L2 цепляем к vxlan l3 погружаем в vrf Anycast gateway и разного рода Symmetric IRB, переводим клиентов с одного стыка на multihoming
+
+по дороге показываем как переключали, проверяем связность.

@@ -77,8 +77,11 @@
 
 Конфигурационные файлы
 
-Таблица IP
+**Таблица IP**
 
+<details> 
+
+<summary>Читать</summary>
 
 |Device    |Port      |IPv4                               |VLAN|Link                             |Comment         |
 |----------|----------|-----------------------------------|----|---------------------------------|----------------|
@@ -198,6 +201,8 @@
 |DCI-1     |eth3      |  10.100.0.4/31                    | --  |Leaf_4 eth7  – eth2 Gateway-1   |  Interconnect  |
 |DCI-1     |loopback0 |  8.8.8.8/32                       | --  | None                           |  Loopback      |
 |DCI-1     |loopback1 |  1.1.1.1/32                       | --  | None                           |  Loopback      |
+
+</details> 
 
 
 ## Выполнение работ

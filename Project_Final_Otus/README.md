@@ -245,27 +245,27 @@
 
 До шлюза и соседей в других Site
 
-![](img/Old_Client_1.png)
+![](img/Old_CLient_1.png)
 
 **Client-2 Ping**
 
 До шлюза и соседей в других Site
 
-![](img/Old_Client_2.png)
+![](img/Old_CLient_2.png)
 
 **Client-3 Ping**
 
 в одном site с Client-4
 До шлюза и соседей в других Site
 
-![](img/Old_Client_3.png)
+![](img/Old_CLient_3.png)
 
 **Client-4 Ping**
 
-в одном site с Client-3
+в одном site с Cient-3
 До шлюза и соседей в других Site
 
-![](img/Old_Client_4.png)
+![](img/Old_CLient_4.png)
 
 
 ### Строим сеть поверх старой, вся конфигурация будет отдельными файлами, показываем что получилось

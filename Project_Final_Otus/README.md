@@ -360,8 +360,8 @@ vlan XXX
 
 Конфигурации [финальные](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus/cfg/new)
 
-Скриншоты [тут](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus/cfg/img)
+Скриншоты [тут](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus/img)
 
-Презентация [тут](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus/cfg/Presentation)
+Презентация [тут](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus/Presentation)
 
 

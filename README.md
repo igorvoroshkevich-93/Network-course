@@ -1,6 +1,6 @@
-# Network-course
+# Network-course Дизайн сети ЦОД
 
-## Лабораторные работы курса
+## Лабораторные работы курса 
 
 [ДЗ1 - Распределение адресного пространства](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab01_Planning)
 
@@ -17,4 +17,11 @@
 [ДЗ7 - eBGP-OSPF/Overlay_MLAG](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab07_Overlay_EVPN_MLAG)
 
 [ДЗ8 - eBGP-OSPF/Overlay+VRF_Routing](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Lab08_Overlay_EVPN_Routing)
+
+[Проектная работа / Переход от классической трехзвенной архитектуры к полноценной VxLan-фабрике с multisite](https://github.com/igorvoroshkevich-93/Network-course/tree/main/Project_Final_Otus)
+
+
+
+
+
 
